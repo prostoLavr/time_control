@@ -1,7 +1,10 @@
 import pandas as pd
-import numpy as np
+# import numpy as np
 import os
 from datetime import datetime as dt
+
+
+INF_TIME = dt(5000, 1, 1)
 
 
 class DataManagerLoader:
@@ -54,8 +57,22 @@ class DataManager(DataManagerLoader):
         return self.df[self.df.StartTime > dt.now()]
 
     def get_started(self):
-        return self.df[np.array(self.df.StartTime < dt.now()) &
-                       (np.array(self.df.EndTime >= dt.now()) | np.array(self.df.EndTime.isnull()))]
+        return self.df[(self.df.StartTime < dt.now()) &
+                       ((self.df.EndTime >= dt.now()) | (self.df.EndTime.isnull()))]
 
     def get_ended(self):
         return self.df[self.df.EndTime < dt.now()]
+
+    def get_by_time(self, start_time: dt or None, end_time: dt or None, df=None):
+        if start_time is None:
+            start_time = dt(1, 1, 1)
+        if end_time is None:
+            end_time = INF_TIME
+        df = df or self.df
+
+        df_null = df[df.EndTime.isnull()]
+        res_null = df_null[(df_null.StartTime < end_time)]
+
+        df_notnull = df[df.notnull()]
+        res_notnull = df_notnull[(df_notnull.StartTime < end_time) & (start_time < df_notnull.EndTime)]
+        return res_null, res_notnull

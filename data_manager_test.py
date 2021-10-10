@@ -8,6 +8,7 @@ import shutil
 test_dir = './test_dir'
 test_file = './test_dir/test_file.pickle'
 
+
 class DataManagerLoaderTest(unittest.TestCase):
     @staticmethod
     def clear_dir():
@@ -61,6 +62,28 @@ class DataManagerTest(unittest.TestCase):
         self.assertEqual(set(dm.get_plans().Name), {'Future Task', 'Future Task too'})
         self.assertEqual(set(dm.get_started().Name), {'Now Task', 'Now Task too'})
         self.assertEqual(set(dm.get_ended().Name), {'Past Task'})
+
+    def test_tasks_getters_by_time(self):
+        dm = table_and_data.DataManager()
+        dm.create_new_df(test_file)
+        dm.add_task('Now Task', 'important', '#F00', dt.now(), dt(3021, 10, 9, 15, 10), 'my test:)')
+        dm.add_task('Now Task too', 'important', '#F00', dt.now(), None, 'my test:)')
+        dm.add_task('Past Task', 'important', '#F00', dt(300, 10, 10, 14, 10), dt(300, 10, 10, 15, 10), 'my test:)')
+        dm.add_task('Future Task', 'important', '#F00', dt(3021, 10, 9, 15, 10), dt(3021, 10, 9, 15, 20), 'my test:)')
+        dm.add_task('Future Task too', 'important', '#F00', dt(3021, 10, 9, 14, 10), None, 'my test:)')
+
+        self.assertEqual(self.get_result(dm, dt(200, 10, 10, 14, 20), dt(4000, 10, 10, 15, 30)),
+                         {'Now Task', 'Now Task too', 'Future Task', 'Future Task too', 'Past Task'})
+        self.assertEqual(self.get_result(dm, dt(400, 10, 10, 14, 20), dt(4000, 10, 10, 15, 30)),
+                         {'Now Task', 'Now Task too', 'Future Task', 'Future Task too'})
+        self.assertEqual(self.get_result(dm, dt(3021, 10, 10, 14, 20), dt(3021, 10, 10, 14, 30)),
+                         {'Future Task too', 'Now Task too'})
+        self.assertEqual(self.get_result(dm, dt(300, 10, 10, 14, 20), dt(400, 10, 10, 14, 30)),
+                         {'Past Task'})
+
+    def get_result(self, dm, start_time, end_time):
+        res = (*map(lambda x: set(x.Name), dm.get_by_time(start_time, end_time)),)
+        return res[0] | res[1]
 
 
 if __name__ == '__main__':
