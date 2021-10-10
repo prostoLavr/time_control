@@ -1,11 +1,8 @@
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QScrollArea, QVBoxLayout
+from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QScrollArea, QVBoxLayout, QFrame
 from PyQt5 import QtGui
-from gui import Ui_MainWindow
-from add_widget import Ui_Frame
-from task_widget import Ui_Frame as Ui_TaskWidget
-
-import datetime
-import time
+from my_widgets.gui import Ui_MainWindow
+from my_widgets.add_widget import Ui_Frame
+from my_widgets.task_widget import Ui_Frame as Ui_TaskWidget
 
 import sys
 
@@ -85,7 +82,7 @@ class StatisticWidget(QScrollArea):
         self.setLayout(self.my_layout)
 
 
-class TaskWidget(Ui_TaskWidget, QWidget):
+class TaskWidget(Ui_TaskWidget, QFrame):
     def __init__(self, text, time_start, long_time,  parent):
         super(TaskWidget, self).__init__()
         self.set_text(text)
