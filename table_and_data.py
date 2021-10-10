@@ -47,9 +47,9 @@ class DataManagerLoader:
 
 
 class DataManager(DataManagerLoader):
-    def add_task(self, name: str, type: str, color: str, start_time: dt,
+    def add_task(self, name: str, type_: str, color: str, start_time: dt,
                  end_time: dt or None, description: str):
-        dct = {'Name': name, 'Type': type, 'Color': color, 'StartTime': start_time, 'EndTime': end_time,
+        dct = {'Name': name, 'Type': type_, 'Color': color, 'StartTime': start_time, 'EndTime': end_time,
                'Duration': None if end_time is None else end_time - start_time, 'Description': description}
         self.df = self.df.append(dct, ignore_index=True)
 

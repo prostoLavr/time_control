@@ -16,7 +16,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def my_setupUi(self):
         self.home_widget_obj = HomeWidget(self.add_widget)
-        self.statictic_widget_obj = StatisticWidget(self.statictic_widget)
+        self.statistic_widget_obj = StatisticWidget(self.statictic_widget)
         self.buttons_connect()
         self.close_all()
         self.show()
@@ -56,7 +56,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
         width, height = a0.size().width(), a0.size().height()
         hp = height / 100
-        wp = width / 100
+        # wp = width / 100
         self.centralwidget.setGeometry(0, 0, width, height)
         # self.homeButton.setFixedHeight(round(90 * hp))
         self.settingsButton.setMaximumHeight(round(10*hp))
