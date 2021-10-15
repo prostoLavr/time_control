@@ -7,6 +7,18 @@ import widgets_init
 import sys
 
 
+class Director:
+    def __init__(self):
+        self.window = None
+
+    def build_window(self):
+        window = SetupMainWindow()
+        MenuConnectBuilder(window)
+        ButtonConnectBuilder(window)
+        self.window = window
+        return window
+
+
 class SetupMainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -21,24 +33,24 @@ class SetupMainWindow(QMainWindow, Ui_MainWindow):
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
         width, height = a0.size().width(), a0.size().height()
         hp = height / 100
-        # wp = width / 100
         self.centralwidget.setGeometry(0, 0, width, height)
         self.settingsButton.setMaximumHeight(round(10*hp))
         self.horizontalWidget.setGeometry(0, 0, width, height)
 
 
-class MenuConnectMainWindow(SetupMainWindow):
-    def __init__(self, *args, **kwargs):
-        super(MenuConnectMainWindow, self).__init__(*args, **kwargs)
+class MenuConnectBuilder:
+    def __init__(self, window):
+        self.window = window
         self.menu_buttons_connect()
         self.close_all()
 
     def menu_buttons_connect(self):
-        self.menu_buttons = (self.homeButton, self.historyButton, self.statisticButton, self.settingsButton)
-        for button in self.menu_buttons:
+        self.window.menu_buttons = (self.window.homeButton, self.window.historyButton, self.window.statisticButton,
+                             self.window.settingsButton)
+        for button in self.window.menu_buttons:
             button.clicked.connect(self.menu_button_click)
-        self.buttons_action_dct = {'Домой': self.show_home, 'Статистика': self.show_statistic,
-                                   'История': self.close_all, 'Настройки': self.close_all}
+        self.window.buttons_action_dct = {'Домой': self.show_home, 'Статистика': self.show_statistic,
+                                          'История': self.close_all, 'Настройки': self.close_all}
 
     def close_all(self):
         self.close_statistic()
@@ -46,29 +58,29 @@ class MenuConnectMainWindow(SetupMainWindow):
 
     def show_home(self):
         self.close_all()
-        self.add_widget.show()
+        self.window.add_widget.show()
 
     def close_home(self):
-        self.add_widget.hide()
+        self.window.add_widget.hide()
 
     def show_statistic(self):
         self.close_all()
-        self.statictic_widget.show()
+        self.window.statictic_widget.show()
 
     def close_statistic(self):
-        self.statictic_widget.hide()
+        self.window.statictic_widget.hide()
 
     def menu_button_click(self):
-        for button in self.menu_buttons:
+        for button in self.window.menu_buttons:
             button.setStyleSheet('')
-        self.sender().setStyleSheet('background: "#AAA";')
-        print(f'Открыта вкладка {self.sender().text()}')
-        self.buttons_action_dct[self.sender().text()]()
+        self.window.sender().setStyleSheet('background: "#AAA";')
+        print(f'Открыта вкладка {self.window.sender().text()}')
+        self.window.buttons_action_dct[self.window.sender().text()]()
 
 
-class ButtonConnectMainWindow(MenuConnectMainWindow):
-    def __init__(self, *args, **kwargs):
-        super(ButtonConnectMainWindow, self).__init__(*args, **kwargs)
+class ButtonConnectBuilder:
+    def __init__(self, window):
+        self.window = window
         self.connect_button()
 
     def connect_button(self):
@@ -77,5 +89,5 @@ class ButtonConnectMainWindow(MenuConnectMainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = ButtonConnectMainWindow()
+    ex = Director().build_window()
     sys.exit(app.exec_())
