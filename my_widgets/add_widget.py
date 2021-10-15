@@ -14,11 +14,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Frame(object):
     def setupUi(self, Frame):
         Frame.setObjectName("Frame")
-        Frame.resize(490, 260)
+        Frame.resize(504, 305)
         Frame.setMinimumSize(QtCore.QSize(490, 260))
-        Frame.setStyleSheet("QPushButton{\n"
-"    border-radius: 0;\n"
-"}")
+        Frame.setStyleSheet("")
         self.verticalLayoutWidget_2 = QtWidgets.QWidget(Frame)
         self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(0, 0, 489, 273))
         self.verticalLayoutWidget_2.setObjectName("verticalLayoutWidget_2")
@@ -53,6 +51,9 @@ class Ui_Frame(object):
         self.timeDoing.setObjectName("timeDoing")
         self.gridLayout.addWidget(self.timeDoing, 1, 1, 1, 1)
         self.addTaskButton = QtWidgets.QPushButton(self.verticalLayoutWidget_2)
+        self.addTaskButton.setAutoDefault(False)
+        self.addTaskButton.setDefault(False)
+        self.addTaskButton.setFlat(False)
         self.addTaskButton.setObjectName("addTaskButton")
         self.gridLayout.addWidget(self.addTaskButton, 1, 2, 1, 1)
         self.upVerticalLayout.addLayout(self.gridLayout)
@@ -64,48 +65,26 @@ class Ui_Frame(object):
         self.horizontalLayout.setContentsMargins(-1, 0, -1, -1)
         self.horizontalLayout.setSpacing(5)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.pushButton = QtWidgets.QPushButton(self.verticalLayoutWidget_2)
-        self.pushButton.setStyleSheet("QPushButton {\n"
-"    background: \"#CCC\";\n"
-"    border-width: 3 3 3 3;\n"
-"    border-style: solid none none solid;\n"
-"    border-color: \"#BBB\";\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background: \"#BBB\";\n"
-"}\n"
-"QPushButton:focus {\n"
-"    background: \"#BBB\";\n"
-"}")
-        self.pushButton.setObjectName("pushButton")
-        self.horizontalLayout.addWidget(self.pushButton)
-        self.pushButton_2 = QtWidgets.QPushButton(self.verticalLayoutWidget_2)
-        self.pushButton_2.setStyleSheet("QPushButton {\n"
-"    background: \"#CCC\";\n"
-"    border-width: 3 3 3 3;\n"
-"    border-style: solid none none solid;\n"
-"    border-color: \"#BBB\";\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background: \"#BBB\";\n"
-"}\n"
-"QPushButton:focus {\n"
-"    background: \"#BBB\";\n"
-"}")
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.horizontalLayout.addWidget(self.pushButton_2)
         self.bottomVerticalLayout.addLayout(self.horizontalLayout)
-        self.scrollArea = QtWidgets.QScrollArea(self.verticalLayoutWidget_2)
-        self.scrollArea.setStyleSheet("background: \"#DDD\";\n"
-"border: None;")
-        self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setObjectName("scrollArea")
-        self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 477, 108))
-        self.scrollAreaWidgetContents.setStyleSheet("")
-        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
-        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
-        self.bottomVerticalLayout.addWidget(self.scrollArea)
+        self.homeScrollArea = QtWidgets.QScrollArea(self.verticalLayoutWidget_2)
+        self.homeScrollArea.setStyleSheet("")
+        self.homeScrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.homeScrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.homeScrollArea.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+        self.homeScrollArea.setWidgetResizable(True)
+        self.homeScrollArea.setObjectName("homeScrollArea")
+        self.homeScrollAreaWidgetContents = QtWidgets.QWidget()
+        self.homeScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 459, 98))
+        self.homeScrollAreaWidgetContents.setStyleSheet("")
+        self.homeScrollAreaWidgetContents.setObjectName("homeScrollAreaWidgetContents")
+        self.verticalLayoutWidget = QtWidgets.QWidget(self.homeScrollAreaWidgetContents)
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(0, 0, 481, 281))
+        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
+        self.homeVLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
+        self.homeVLayout.setContentsMargins(0, 0, 0, 0)
+        self.homeVLayout.setObjectName("homeVLayout")
+        self.homeScrollArea.setWidget(self.homeScrollAreaWidgetContents)
+        self.bottomVerticalLayout.addWidget(self.homeScrollArea)
         self.verticalLayout.addLayout(self.bottomVerticalLayout)
 
         self.retranslateUi(Frame)
@@ -114,9 +93,7 @@ class Ui_Frame(object):
         Frame.setTabOrder(self.startTaskButton, self.dateTimeStart)
         Frame.setTabOrder(self.dateTimeStart, self.timeDoing)
         Frame.setTabOrder(self.timeDoing, self.addTaskButton)
-        Frame.setTabOrder(self.addTaskButton, self.pushButton)
-        Frame.setTabOrder(self.pushButton, self.pushButton_2)
-        Frame.setTabOrder(self.pushButton_2, self.scrollArea)
+        Frame.setTabOrder(self.addTaskButton, self.homeScrollArea)
 
     def retranslateUi(self, Frame):
         _translate = QtCore.QCoreApplication.translate
@@ -125,5 +102,3 @@ class Ui_Frame(object):
         self.label_doing.setText(_translate("Frame", "Время выполнения"))
         self.label_start.setText(_translate("Frame", "Время начала:"))
         self.addTaskButton.setText(_translate("Frame", "Добавить"))
-        self.pushButton.setText(_translate("Frame", "PushButton"))
-        self.pushButton_2.setText(_translate("Frame", "PushButton"))

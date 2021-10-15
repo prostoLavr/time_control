@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>490</width>
-    <height>260</height>
+    <width>504</width>
+    <height>305</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -20,9 +20,7 @@
    <string>Frame</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QPushButton{
-	border-radius: 0;
-}</string>
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget_2">
    <property name="geometry">
@@ -104,6 +102,15 @@
           <property name="text">
            <string>Добавить</string>
           </property>
+          <property name="autoDefault">
+           <bool>false</bool>
+          </property>
+          <property name="default">
+           <bool>false</bool>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
          </widget>
         </item>
        </layout>
@@ -123,71 +130,48 @@
         <property name="topMargin">
          <number>0</number>
         </property>
-        <item>
-         <widget class="QPushButton" name="pushButton">
-          <property name="styleSheet">
-           <string notr="true">QPushButton {
-	background: &quot;#CCC&quot;;
-	border-width: 3 3 3 3;
-	border-style: solid none none solid;
-	border-color: &quot;#BBB&quot;;
-}
-QPushButton:hover {
-	background: &quot;#BBB&quot;;
-}
-QPushButton:focus {
-	background: &quot;#BBB&quot;;
-}</string>
-          </property>
-          <property name="text">
-           <string>PushButton</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_2">
-          <property name="styleSheet">
-           <string notr="true">QPushButton {
-	background: &quot;#CCC&quot;;
-	border-width: 3 3 3 3;
-	border-style: solid none none solid;
-	border-color: &quot;#BBB&quot;;
-}
-QPushButton:hover {
-	background: &quot;#BBB&quot;;
-}
-QPushButton:focus {
-	background: &quot;#BBB&quot;;
-}</string>
-          </property>
-          <property name="text">
-           <string>PushButton</string>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
       <item>
-       <widget class="QScrollArea" name="scrollArea">
+       <widget class="QScrollArea" name="homeScrollArea">
         <property name="styleSheet">
-         <string notr="true">background: &quot;#DDD&quot;;
-border: None;</string>
+         <string notr="true"/>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOn</enum>
+        </property>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QAbstractScrollArea::AdjustToContents</enum>
         </property>
         <property name="widgetResizable">
          <bool>true</bool>
         </property>
-        <widget class="QWidget" name="scrollAreaWidgetContents">
+        <widget class="QWidget" name="homeScrollAreaWidgetContents">
          <property name="geometry">
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>477</width>
-           <height>108</height>
+           <width>459</width>
+           <height>98</height>
           </rect>
          </property>
          <property name="styleSheet">
           <string notr="true"/>
          </property>
+         <widget class="QWidget" name="verticalLayoutWidget">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>481</width>
+            <height>281</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="homeVLayout"/>
+         </widget>
         </widget>
        </widget>
       </item>
@@ -202,9 +186,7 @@ border: None;</string>
   <tabstop>dateTimeStart</tabstop>
   <tabstop>timeDoing</tabstop>
   <tabstop>addTaskButton</tabstop>
-  <tabstop>pushButton</tabstop>
-  <tabstop>pushButton_2</tabstop>
-  <tabstop>scrollArea</tabstop>
+  <tabstop>homeScrollArea</tabstop>
  </tabstops>
  <resources/>
  <connections/>
