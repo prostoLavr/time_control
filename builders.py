@@ -9,18 +9,18 @@ import widgets_init
 class HomeWidgetBuilder:
     def __init__(self, window):
         self.window = window
-        self.home_widget_init()
+        self.widget_init()
 
-    def home_widget_init(self):
+    def widget_init(self):
         self.window.home_widget_obj = widgets_init.HomeWidget(self.window.add_widget)
 
 
 class HistoryWidgetBuilder:
     def __init__(self, window):
         self.window = window
-        self.history_widget_init()
+        self.widget_init()
 
-    def history_widget_init(self):
+    def widget_init(self):
         self.window.history_widget_obj = widgets_init.HistoryWidget(self.window.history_widget)
 
 
@@ -29,6 +29,13 @@ class MenuConnectBuilder:
         self.window = window
         self.menu_buttons_connect()
         self.close_all()
+
+    def menu_button_click(self):
+        for button in self.window.menu_buttons:
+            button.setStyleSheet('')
+        self.window.sender().setStyleSheet('background: "#AAA";')
+        print(f'Открыта вкладка {self.window.sender().text()}')
+        self.window.buttons_action_dct[self.window.sender().text()]()
 
     def menu_buttons_connect(self):
         self.window.menu_buttons = (self.window.homeButton, self.window.historyButton, self.window.statisticButton,
@@ -56,13 +63,6 @@ class MenuConnectBuilder:
         self.close_all()
         self.window.history_widget.show()
 
-    def menu_button_click(self):
-        for button in self.window.menu_buttons:
-            button.setStyleSheet('')
-        self.window.sender().setStyleSheet('background: "#AAA";')
-        print(f'Открыта вкладка {self.window.sender().text()}')
-        self.window.buttons_action_dct[self.window.sender().text()]()
-
 
 class TaskListBuilder:
     def __init__(self, scroll, parent):
@@ -73,7 +73,6 @@ class TaskListBuilder:
 
         self.widget.setLayout(self.vbox)
 
-        # Scroll Area Properties
         self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.scroll.setWidgetResizable(True)
@@ -91,11 +90,6 @@ class TaskListBuilder:
         widget.task = task
         self.vbox.addWidget(widget)
 
-
-class ButtonConnectBuilder:
-    def __init__(self, window):
-        self.window = window
-        self.connect_button()
-
-    def connect_button(self):
-        pass
+    def add_test_tasks(self):
+        for _ in range(10):
+            self.add_test_task()

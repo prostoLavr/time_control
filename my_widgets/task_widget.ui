@@ -6,29 +6,44 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>355</width>
-    <height>80</height>
+    <width>360</width>
+    <height>125</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>355</width>
-    <height>80</height>
+    <width>360</width>
+    <height>125</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Frame</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QFrame{background:&quot;#CCC&quot;;};</string>
+  </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>331</width>
-     <height>61</height>
+     <x>0</x>
+     <y>0</y>
+     <width>359</width>
+     <height>124</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="leftMargin">
+     <number>5</number>
+    </property>
+    <property name="topMargin">
+     <number>5</number>
+    </property>
+    <property name="rightMargin">
+     <number>5</number>
+    </property>
+    <property name="bottomMargin">
+     <number>5</number>
+    </property>
     <item>
      <layout class="QGridLayout" name="gridLayout" columnstretch="0,6">
       <item row="0" column="0">

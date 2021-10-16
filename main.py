@@ -18,15 +18,11 @@ class Director:
         window = SetupMainWindow()
         builders.MenuConnectBuilder(window)
         builders.HomeWidgetBuilder(window)
+        builders.TaskListBuilder(window.home_widget_obj.homeScrollArea, window)
         builders.HistoryWidgetBuilder(window)
-        self.create_list_widget(window)
+        builders.TaskListBuilder(window.history_widget_obj.historyScrollArea, window)
         self.window = window
         return window
-
-    @staticmethod
-    def create_list_widget(window):
-        # builders.TaskListBuilder(window.scrollArea, window)
-        pass
 
 
 class SetupMainWindow(QMainWindow, Ui_MainWindow):
