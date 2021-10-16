@@ -1,18 +1,17 @@
 from PyQt5.QtWidgets import QWidget, QFrame
 
-from my_widgets.add_widget import Ui_Frame
-from my_widgets.task_widget import Ui_Frame as Ui_TaskWidget
+from my_widgets import add_widget, task_widget, history_widget
 
 from datetime import datetime as dt
 
 
-class HomeWidget(Ui_Frame, QWidget):
+class HomeWidget(add_widget.Ui_Frame, QWidget):
     def __init__(self, parent):
         super(HomeWidget, self).__init__()
         self.setupUi(parent)
 
 
-class TaskWidget(Ui_TaskWidget, QFrame):
+class TaskWidget(task_widget.Ui_Frame, QFrame):
     def __init__(self, text: str, time_start: dt, long_time: dt or None,  parent):
         super(TaskWidget, self).__init__()
         self.text = self.set_text(text)

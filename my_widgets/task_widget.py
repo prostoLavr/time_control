@@ -14,10 +14,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Frame(object):
     def setupUi(self, Frame):
         Frame.setObjectName("Frame")
-        Frame.resize(345, 67)
-        Frame.setMinimumSize(QtCore.QSize(330, 60))
+        Frame.resize(355, 80)
+        Frame.setMinimumSize(QtCore.QSize(355, 80))
         self.verticalLayoutWidget = QtWidgets.QWidget(Frame)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(10, 10, 331, 51))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(10, 10, 331, 61))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)

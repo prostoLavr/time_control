@@ -25,7 +25,8 @@ class Director:
 
     @staticmethod
     def create_list_widget(window):
-        builders.TaskListBuilder(window.home_widget_obj.homeVLayout, window.home_widget_obj)
+        # builders.TaskListBuilder(window.scrollArea, window)
+        pass
 
 
 class SetupMainWindow(QMainWindow, Ui_MainWindow):

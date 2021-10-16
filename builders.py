@@ -1,4 +1,5 @@
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QScrollArea
+from PyQt5.QtCore import Qt, QSize
 
 
 from datetime import datetime as dt
@@ -14,6 +15,15 @@ class HomeWidgetBuilder:
         self.window.home_widget_obj = widgets_init.HomeWidget(self.window.add_widget)
 
 
+class HistoryWidgetBuilder:
+    def __init__(self, window):
+        self.window = window
+        self.history_widget_init()
+
+    def history_widget_init(self):
+        self.window.history_widget_obj = widgets_init.HistoryWidget(self.window.history_widget)
+
+
 class MenuConnectBuilder:
     def __init__(self, window):
         self.window = window
@@ -26,25 +36,25 @@ class MenuConnectBuilder:
         for button in self.window.menu_buttons:
             button.clicked.connect(self.menu_button_click)
         self.window.buttons_action_dct = {'Домой': self.show_home, 'Статистика': self.show_statistic,
-                                          'История': self.close_all, 'Настройки': self.close_all}
+                                          'История': self.show_history, 'Настройки': self.close_all}
 
     def close_all(self):
-        self.close_statistic()
-        self.close_home()
+        self.window.statictic_widget.hide()
+        self.window.add_widget.hide()
+        self.window.history_widget.hide()
+        self.window.settings_widget.hide()
 
     def show_home(self):
         self.close_all()
         self.window.add_widget.show()
 
-    def close_home(self):
-        self.window.add_widget.hide()
-
     def show_statistic(self):
         self.close_all()
         self.window.statictic_widget.show()
 
-    def close_statistic(self):
-        self.window.statictic_widget.hide()
+    def show_history(self):
+        self.close_all()
+        self.window.history_widget.show()
 
     def menu_button_click(self):
         for button in self.window.menu_buttons:
@@ -55,17 +65,31 @@ class MenuConnectBuilder:
 
 
 class TaskListBuilder:
-    def __init__(self, v_layout, parent):
-        self.v_layout = v_layout
-        self.parent = parent
-        for _ in range(3):
+    def __init__(self, scroll, parent):
+        self.window = parent
+        self.scroll = scroll
+        self.widget = QWidget()  # Widget that contains the collection of Vertical Box
+        self.vbox = QVBoxLayout()  # The Vertical Box that contains the Horizontal Boxes of  labels and buttons
+
+        self.widget.setLayout(self.vbox)
+
+        # Scroll Area Properties
+        self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.scroll.setWidgetResizable(True)
+        self.scroll.setWidget(self.widget)
+        w = parent.width()
+        h = parent.height()
+        self.scroll.resize(QSize(w // 2, h))
+
+        for _ in range(10):
             self.add_test_task()
 
     def add_test_task(self):
-        widget = QWidget(self.parent)
+        widget = QWidget(self.window)
         task = widgets_init.TaskWidget('test', dt(1, 1, 1, 1, 1), None, widget)
         widget.task = task
-        self.v_layout.addWidget(widget)
+        self.vbox.addWidget(widget)
 
 
 class ButtonConnectBuilder:

@@ -47,7 +47,7 @@
     <property name="styleSheet">
      <string notr="true"/>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -203,42 +203,13 @@ background: &quot;#BBB&quot;
       </widget>
      </item>
      <item>
-      <widget class="QWidget" name="statictic_widget" native="true">
-       <widget class="QScrollArea" name="scrollArea">
-        <property name="geometry">
-         <rect>
-          <x>-1</x>
-          <y>-1</y>
-          <width>271</width>
-          <height>601</height>
-         </rect>
-        </property>
-        <property name="widgetResizable">
-         <bool>true</bool>
-        </property>
-        <widget class="QWidget" name="scrollAreaWidgetContents">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>267</width>
-           <height>597</height>
-          </rect>
-         </property>
-         <widget class="QWidget" name="verticalLayoutWidget">
-          <property name="geometry">
-           <rect>
-            <x>9</x>
-            <y>19</y>
-            <width>261</width>
-            <height>571</height>
-           </rect>
-          </property>
-          <layout class="QVBoxLayout" name="statistic_v_layout"/>
-         </widget>
-        </widget>
-       </widget>
-      </widget>
+      <widget class="QWidget" name="statictic_widget" native="true"/>
+     </item>
+     <item>
+      <widget class="QWidget" name="history_widget" native="true"/>
+     </item>
+     <item>
+      <widget class="QWidget" name="settings_widget" native="true"/>
      </item>
     </layout>
    </widget>
