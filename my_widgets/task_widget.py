@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'task_widget.ui'
+# Form implementation generated from reading ui file './my_widgets/task_widget.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -14,18 +14,31 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Frame(object):
     def setupUi(self, Frame):
         Frame.setObjectName("Frame")
-        Frame.resize(360, 125)
-        Frame.setMinimumSize(QtCore.QSize(360, 125))
-        Frame.setStyleSheet("QFrame{background:\"#CCC\";};")
+        Frame.resize(330, 60)
+        Frame.setMinimumSize(QtCore.QSize(330, 60))
+        Frame.setStyleSheet("")
         self.verticalLayoutWidget = QtWidgets.QWidget(Frame)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(0, 0, 359, 124))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(0, 0, 331, 61))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setContentsMargins(5, 5, 5, 5)
         self.verticalLayout.setObjectName("verticalLayout")
         self.gridLayout = QtWidgets.QGridLayout()
+        self.gridLayout.setSpacing(0)
         self.gridLayout.setObjectName("gridLayout")
         self.label = QtWidgets.QLabel(self.verticalLayoutWidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
+        self.label.setSizePolicy(sizePolicy)
+        self.label.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.label.setScaledContents(True)
+        self.label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
+        self.label.setWordWrap(False)
+        self.label.setIndent(-1)
+        self.label.setOpenExternalLinks(False)
+        self.label.setTextInteractionFlags(QtCore.Qt.NoTextInteraction)
         self.label.setObjectName("label")
         self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
         self.checkBox = QtWidgets.QCheckBox(self.verticalLayoutWidget)
@@ -35,6 +48,8 @@ class Ui_Frame(object):
         self.label_2.setObjectName("label_2")
         self.gridLayout.addWidget(self.label_2, 1, 0, 1, 1)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setContentsMargins(3, -1, -1, -1)
+        self.horizontalLayout.setSpacing(3)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.pushButton = QtWidgets.QPushButton(self.verticalLayoutWidget)
         self.pushButton.setObjectName("pushButton")
@@ -43,7 +58,7 @@ class Ui_Frame(object):
         self.pushButton_2.setObjectName("pushButton_2")
         self.horizontalLayout.addWidget(self.pushButton_2)
         self.gridLayout.addLayout(self.horizontalLayout, 1, 1, 1, 1)
-        self.gridLayout.setColumnStretch(1, 6)
+        self.gridLayout.setColumnStretch(1, 5)
         self.verticalLayout.addLayout(self.gridLayout)
 
         self.retranslateUi(Frame)
@@ -52,7 +67,7 @@ class Ui_Frame(object):
     def retranslateUi(self, Frame):
         _translate = QtCore.QCoreApplication.translate
         Frame.setWindowTitle(_translate("Frame", "Frame"))
-        self.label.setText(_translate("Frame", "<html><head/><body><p>Задача №1</p><p><br/></p></body></html>"))
+        self.label.setText(_translate("Frame", "Задача №1"))
         self.checkBox.setText(_translate("Frame", "Выполнено"))
         self.label_2.setText(_translate("Frame", "11.12.2007 13:00 - 14:00"))
         self.pushButton.setText(_translate("Frame", "Изменить"))

@@ -1,3 +1,6 @@
+import ui_to_py
+ui_to_py.convert()
+
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import QtGui
 

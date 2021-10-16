@@ -1,11 +1,11 @@
 from PyQt5.QtWidgets import QWidget, QFrame
 
-from my_widgets import add_widget, task_widget, history_widget
+from my_widgets import home_widget, task_widget, history_widget
 
 from datetime import datetime as dt
 
 
-class HomeWidget(add_widget.Ui_Frame, QWidget):
+class HomeWidget(home_widget.Ui_Frame, QWidget):
     def __init__(self, parent):
         super(HomeWidget, self).__init__()
         self.setupUi(parent)

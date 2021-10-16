@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'history_widget.ui'
+# Form implementation generated from reading ui file './my_widgets/history_widget.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_HistoryWidget(object):
     def setupUi(self, HistoryWidget):
         HistoryWidget.setObjectName("HistoryWidget")
-        HistoryWidget.resize(485, 230)
+        HistoryWidget.resize(485, 233)
         HistoryWidget.setMinimumSize(QtCore.QSize(485, 0))
         self.verticalLayoutWidget = QtWidgets.QWidget(HistoryWidget)
         self.verticalLayoutWidget.setGeometry(QtCore.QRect(0, 0, 484, 231))
