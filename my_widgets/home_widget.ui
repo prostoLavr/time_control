@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>504</width>
-    <height>315</height>
+    <width>500</width>
+    <height>390</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>490</width>
-    <height>260</height>
+    <height>390</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -28,7 +28,7 @@
      <x>0</x>
      <y>0</y>
      <width>489</width>
-     <height>273</height>
+     <height>381</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -123,6 +123,43 @@
        <number>0</number>
       </property>
       <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Текущие</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QScrollArea" name="nowScrollArea">
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOn</enum>
+        </property>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="scrollAreaWidgetContents1">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>459</width>
+           <height>82</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Планы</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <property name="spacing">
          <number>5</number>
@@ -133,7 +170,7 @@
        </layout>
       </item>
       <item>
-       <widget class="QScrollArea" name="homeScrollArea">
+       <widget class="QScrollArea" name="futureScrollArea">
         <property name="styleSheet">
          <string notr="true"/>
         </property>
@@ -149,28 +186,18 @@
         <property name="widgetResizable">
          <bool>true</bool>
         </property>
-        <widget class="QWidget" name="homeScrollAreaWidgetContents">
+        <widget class="QWidget" name="scrollAreaWidgetContents2">
          <property name="geometry">
           <rect>
            <x>0</x>
            <y>0</y>
            <width>459</width>
-           <height>98</height>
+           <height>82</height>
           </rect>
          </property>
          <property name="styleSheet">
           <string notr="true"/>
          </property>
-         <widget class="QWidget" name="widget" native="true">
-          <property name="geometry">
-           <rect>
-            <x>-1</x>
-            <y>-1</y>
-            <width>471</width>
-            <height>381</height>
-           </rect>
-          </property>
-         </widget>
         </widget>
        </widget>
       </item>
@@ -185,7 +212,7 @@
   <tabstop>dateTimeStart</tabstop>
   <tabstop>timeDoing</tabstop>
   <tabstop>addTaskButton</tabstop>
-  <tabstop>homeScrollArea</tabstop>
+  <tabstop>futureScrollArea</tabstop>
  </tabstops>
  <resources/>
  <connections/>

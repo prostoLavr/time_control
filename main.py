@@ -21,7 +21,8 @@ class Director:
         window = SetupMainWindow()
         builders.MenuConnectBuilder(window)
         builders.HomeWidgetBuilder(window)
-        builders.TaskListBuilder(window.home_widget_obj.homeScrollArea, window)
+        builders.TaskListBuilder(window.home_widget_obj.nowScrollArea, window)
+        builders.TaskListBuilder(window.home_widget_obj.futureScrollArea, window)
         builders.HistoryWidgetBuilder(window)
         builders.TaskListBuilder(window.history_widget_obj.historyScrollArea, window)
         self.window = window
