@@ -11,6 +11,12 @@ class HomeWidget(add_widget.Ui_Frame, QWidget):
         self.setupUi(parent)
 
 
+class HistoryWidget(history_widget.Ui_HistoryWidget, QWidget):
+    def __init__(self, parent):
+        super(HistoryWidget, self).__init__()
+        self.setupUi(parent)
+
+
 class TaskWidget(task_widget.Ui_Frame, QFrame):
     def __init__(self, text: str, time_start: dt, long_time: dt or None,  parent):
         super(TaskWidget, self).__init__()

@@ -18,7 +18,7 @@ class Director:
         window = SetupMainWindow()
         builders.MenuConnectBuilder(window)
         builders.HomeWidgetBuilder(window)
-        builders.ButtonConnectBuilder(window)
+        builders.HistoryWidgetBuilder(window)
         self.create_list_widget(window)
         self.window = window
         return window
