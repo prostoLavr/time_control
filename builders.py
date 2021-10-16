@@ -1,5 +1,6 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QScrollArea
-from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtWidgets import QWidget, QVBoxLayout
+from PyQt5.QtCore import Qt, QSize, QThread, QObject
+import worker
 
 
 from datetime import datetime as dt
@@ -93,3 +94,15 @@ class TaskListBuilder:
     def add_test_tasks(self):
         for _ in range(10):
             self.add_test_task()
+
+
+class UpdateBuilder:
+    def __init__(self, window):
+        window.obj = worker.Worker()
+        window.thread = QThread()
+
+        window.obj.update.connect(window.db_update)
+        window.obj.moveToThread(window.thread)
+        window.obj.destroyed.connect(window.thread.quit)
+        window.thread.started.connect(window.obj.procCounter)
+        window.thread.start()

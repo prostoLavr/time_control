@@ -1,4 +1,5 @@
 import ui_to_py
+
 ui_to_py.convert()
 
 from PyQt5.QtWidgets import QMainWindow, QApplication
@@ -7,7 +8,6 @@ from PyQt5 import QtGui
 import table_and_data
 from my_widgets.gui import Ui_MainWindow
 import builders
-
 
 import sys
 
@@ -25,6 +25,12 @@ class Director:
         builders.TaskListBuilder(window.home_widget_obj.futureScrollArea, window)
         builders.HistoryWidgetBuilder(window)
         builders.TaskListBuilder(window.history_widget_obj.historyScrollArea, window)
+
+        def foo():
+            print('Update...')
+
+        window.db_update = foo
+        a = builders.UpdateBuilder(window)
         self.window = window
         return window
 
@@ -39,7 +45,7 @@ class SetupMainWindow(QMainWindow, Ui_MainWindow):
         width, height = a0.size().width(), a0.size().height()
         hp = height / 100
         self.centralwidget.setGeometry(0, 0, width, height)
-        self.settingsButton.setMaximumHeight(round(10*hp))
+        self.settingsButton.setMaximumHeight(round(10 * hp))
         self.horizontalWidget.setGeometry(0, 0, width, height)
 
 
