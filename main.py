@@ -9,6 +9,7 @@ import table_and_data
 from my_widgets.gui import Ui_MainWindow
 import builders
 
+from datetime import datetime as dt
 import sys
 
 
@@ -25,12 +26,10 @@ class Director:
         builders.TaskListBuilder(window.home_widget_obj.futureScrollArea, window)
         builders.HistoryWidgetBuilder(window)
         builders.TaskListBuilder(window.history_widget_obj.historyScrollArea, window)
-
-        def foo():
-            print('Update...')
-
-        window.db_update = foo
-        a = builders.UpdateBuilder(window)
+        builders.WidgetUpdateBuilder(window)
+        builders.DaemonUpdateBuilder(window)
+        window.home_widget_obj.futureScrollArea.add_task(window, id_=1, name='tk', description='des', start=dt(1, 1, 1, 1, 1),
+                                                         end=dt(1, 1, 1, 1, 1))
         self.window = window
         return window
 

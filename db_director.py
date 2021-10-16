@@ -15,7 +15,7 @@ class DataBase:
 
     @staticmethod
     def format_result(elem):
-        return dict(zip('id name description start end'.split(), elem))
+        return dict(zip('id_ name description start end'.split(), elem))
 
     def all(self):
         return map(self.format_result, self.get_all())
