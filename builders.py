@@ -2,7 +2,6 @@ import typing
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QMainWindow, QScrollArea
 from PyQt5.QtCore import Qt, QSize, QThread
-from PyQt5 import QtGui
 import worker
 import db_director
 
@@ -60,6 +59,7 @@ class MenuConnectBuilder:
 
     def show_home(self):
         self.close_all()
+        HomeAddTaskBuilder.time_set(self)
         self.window.add_widget.show()
 
     def show_statistic(self):
@@ -68,6 +68,7 @@ class MenuConnectBuilder:
 
     def show_history(self):
         self.close_all()
+        self.window.history_widget_obj.endDateTimeEdit.setDateTime(dt.now())
         self.window.history_widget.show()
 
 
@@ -186,13 +187,8 @@ class HomeAddTaskBuilder:
         self.connect()
 
     def connect(self):
-        time = dt.now()
-        minutes = (time.minute + 30) % 60
-        hours = (time.hour + (time.minute + 30) % 60) % 24
-        self.window.home_widget_obj.dateTimeStart.setDateTime(time.replace(hour=hours, minute=minutes))
-        self.window.home_widget_obj.timeDoing.setTime(tm(0, 30))
-
         self.window.home_widget_obj.taskNameEdit.setText('')
+        self.time_set()
 
         def foo():
             name = self.window.home_widget_obj.taskNameEdit.text()
@@ -213,3 +209,10 @@ class HomeAddTaskBuilder:
             self.window.db_update()
 
         self.window.home_widget_obj.addTaskButton.clicked.connect(foo)
+
+    def time_set(self):
+        time = dt.now()
+        minutes = (time.minute + 30) % 60
+        hours = (time.hour + (time.minute + 30) % 60) % 24
+        self.window.home_widget_obj.dateTimeStart.setDateTime(time.replace(hour=hours, minute=minutes))
+        self.window.home_widget_obj.timeDoing.setTime(tm(0, 30))

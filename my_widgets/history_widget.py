@@ -14,10 +14,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_HistoryWidget(object):
     def setupUi(self, HistoryWidget):
         HistoryWidget.setObjectName("HistoryWidget")
-        HistoryWidget.resize(500, 390)
+        HistoryWidget.resize(500, 518)
         HistoryWidget.setMinimumSize(QtCore.QSize(500, 390))
         self.verticalLayoutWidget = QtWidgets.QWidget(HistoryWidget)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(0, 0, 491, 381))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(0, 0, 491, 511))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setContentsMargins(5, 5, 5, 5)
@@ -44,7 +44,7 @@ class Ui_HistoryWidget(object):
         self.pastScrollArea.setWidgetResizable(True)
         self.pastScrollArea.setObjectName("pastScrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 477, 250))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 477, 380))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.pastScrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.pastScrollArea)

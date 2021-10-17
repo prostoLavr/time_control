@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>504</height>
+    <height>542</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -28,7 +28,7 @@
      <x>0</x>
      <y>0</y>
      <width>489</width>
-     <height>501</height>
+     <height>541</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -131,6 +131,9 @@
       </item>
       <item>
        <widget class="QScrollArea" name="nowScrollArea">
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
         <property name="verticalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOn</enum>
         </property>
@@ -146,7 +149,7 @@
            <x>0</x>
            <y>0</y>
            <width>459</width>
-           <height>142</height>
+           <height>162</height>
           </rect>
          </property>
         </widget>
@@ -155,7 +158,7 @@
       <item>
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>Не сделаные</string>
+         <string>Запланировано</string>
         </property>
        </widget>
       </item>
@@ -192,7 +195,7 @@
            <x>0</x>
            <y>0</y>
            <width>459</width>
-           <height>142</height>
+           <height>162</height>
           </rect>
          </property>
          <property name="styleSheet">

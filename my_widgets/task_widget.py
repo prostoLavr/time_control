@@ -14,11 +14,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Frame(object):
     def setupUi(self, Frame):
         Frame.setObjectName("Frame")
-        Frame.resize(230, 90)
-        Frame.setMinimumSize(QtCore.QSize(230, 90))
+        Frame.resize(260, 90)
+        Frame.setMinimumSize(QtCore.QSize(260, 90))
         Frame.setStyleSheet("")
         self.verticalLayoutWidget = QtWidgets.QWidget(Frame)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(0, 0, 231, 91))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(0, 0, 261, 91))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.verticalLayoutWidget)
         self.gridLayout_3.setContentsMargins(5, 5, 5, 5)

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>390</height>
+    <height>518</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -25,7 +25,7 @@
      <x>0</x>
      <y>0</y>
      <width>491</width>
-     <height>381</height>
+     <height>511</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -83,7 +83,7 @@
          <x>0</x>
          <y>0</y>
          <width>477</width>
-         <height>250</height>
+         <height>380</height>
         </rect>
        </property>
       </widget>

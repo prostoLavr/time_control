@@ -13,10 +13,8 @@ ui_to_py.nothing()
 
 
 class Director:
-    def __init__(self):
-        self.window = None
-
-    def build_window(self):
+    @staticmethod
+    def build_window():
         window = MainWindow()
         builders.MenuConnectBuilder(window)
         builders.HomeWidgetBuilder(window)
@@ -27,7 +25,6 @@ class Director:
         builders.WidgetUpdateBuilder(window)
         builders.DaemonUpdateBuilder(window)
         builders.HomeAddTaskBuilder(window)
-        self.window = window
         return window
 
 
@@ -46,5 +43,5 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = Director().build_window()
+    ex = Director.build_window()
     sys.exit(app.exec_())

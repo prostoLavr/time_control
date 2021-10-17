@@ -38,8 +38,8 @@ class TaskWidget(task_widget.Ui_Frame, QFrame):
 
     def update_info(self, data: dict):
         self.set_text(data['name'])
-        self.startTime.setText(data['start'].strftime('%d.%m %H:%M'))
-        self.endTime.setText('...' if data['end'] is None else data['end'].strftime('%d.%m %H:%M'))
+        self.startTime.setText('C ' + data['start'].strftime('%d.%m %H:%M'))
+        self.endTime.setText('По сейчас' if data['end'] is None else 'По ' + data['end'].strftime('%d.%m %H:%M'))
 
     def set_run_by_btn(self):
         self.my_parent.db.set_task_status(self.id_, Status.run.value)
@@ -59,6 +59,10 @@ class TaskWidget(task_widget.Ui_Frame, QFrame):
             self.set_not_done()
         if value == Status.done:
             self.set_done()
+        self.display_difference()
+
+    def display_difference(self):
+        self.update_info({'name': self.text, 'start': self.start, 'end': self.end})
 
     def set_run(self):
         self.adaptateButton.setText('Завершить сейчас')
