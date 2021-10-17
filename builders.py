@@ -174,3 +174,21 @@ class DaemonUpdateBuilder:
         window.obj.destroyed.connect(window.thread.quit)
         window.thread.started.connect(window.obj.procCounter)
         window.thread.start()
+
+
+class HomeAddTaskBuilder:
+    def __init__(self, window):
+        self.window = window
+        self.connect()
+
+    def connect(self):
+        self.window.home_widget_obj.taskNameEdit.setText('')
+
+        def foo():
+            name = self.window.home_widget_obj.taskNameEdit.text()
+            if name:
+                self.window.db.start_now(name)
+                self.window.home_widget_obj.taskNameEdit.setText('')
+            self.window.db_update()
+
+        self.window.home_widget_obj.startTaskButton.clicked.connect(foo)

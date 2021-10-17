@@ -38,6 +38,14 @@ class DataBase:
         self.cur.execute(f'UPDATE Tasks SET status = {status} WHERE id = {id_}')
         self.con.commit()
 
+    def start_now(self, name):
+        print('started with name', name)
+        id_ = self.cur.execute('SELECT MAX(id) from Tasks').fetchone()[0] + 1
+        values = f'{id_}, "{name}", "None", "{dt.now().strftime("%Y-%m-%d %H:%M")}", NULL, 0'
+        q = f'INSERT INTO Tasks VALUES ( {values} )'
+        print(q)
+        self.cur.execute(q)
+
 
 if __name__ == '__main__':
     db = DataBase('db.sqlite')

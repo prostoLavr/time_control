@@ -26,6 +26,7 @@ class Director:
         builders.TaskListBuilder(window.history_widget_obj.pastScrollArea, window)
         builders.WidgetUpdateBuilder(window)
         builders.DaemonUpdateBuilder(window)
+        builders.HomeAddTaskBuilder(window)
         self.window = window
         return window
 

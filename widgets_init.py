@@ -53,7 +53,7 @@ class TaskWidget(task_widget.Ui_Frame, QFrame):
         if value == 2:
             self.set_done()
 
-    def run(self):
+    def set_run(self):
         self.adaptateButton.setText('Завершить')
 
     def set_not_done(self):
