@@ -83,12 +83,9 @@ class TaskListBuilder:
         h = parent.height()
         self.scroll.resize(QSize(w // 2, h))
 
-        self.add_remove()
-        # for i in range(10):
-        #     self.scroll.add_task(self.window, id_=i, name='tk', description='des', start=dt(1, 1, 1, 1, 1),
-        #                          end=dt(1, 1, 1, 1, 1))
+        self.add_remove_setup()
 
-    def add_remove(self):
+    def add_remove_setup(self):
         def add_task(parent, **param_for_task):
             widget = QWidget(parent)
             task = widgets_init.TaskWidget(widget, **param_for_task)
