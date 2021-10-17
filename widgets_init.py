@@ -25,7 +25,7 @@ class TaskWidget(task_widget.Ui_Frame, QFrame):
         self.setupUi(parent)
 
     def text_for_label(self):
-        return '|'.join(map(str, (self.text, self.start, self.long_time)))
+        return '|'.join(map(str, (self.text, self.start, self.duration)))
 
     @staticmethod
     def set_text(text):

@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
-from PyQt5.QtCore import Qt, QSize, QThread, QObject
+from PyQt5.QtCore import Qt, QSize, QThread
 import worker
+import db_director
 
 
 from datetime import datetime as dt
@@ -84,22 +85,27 @@ class TaskListBuilder:
         self.scroll.resize(QSize(w // 2, h))
 
         self.add_remove()
-
-        self.scroll.add_task(self.window, id_=1, name='tk', description='des', start=dt(1, 1, 1, 1, 1),
-                             end=dt(1, 1, 1, 1, 1))
+        # for i in range(10):
+        #     self.scroll.add_task(self.window, id_=i, name='tk', description='des', start=dt(1, 1, 1, 1, 1),
+        #                          end=dt(1, 1, 1, 1, 1))
 
     def add_remove(self):
         def add_task(parent, **param_for_task):
-            widget = QWidget(self.window)
-            task = widgets_init.TaskWidget(parent, **param_for_task)
+            widget = QWidget(parent)
+            task = widgets_init.TaskWidget(widget, **param_for_task)
             widget.task = task
             self.scroll.tasks.update({param_for_task['id_']: widget})
             self.scroll.vbox.addWidget(widget)
             print('add')
 
         def remove_task(id_):
-            self.scroll.vbox.removeWidget(self.scroll.tasks[id_])
-            print('remove')
+            if id_ in self.scroll.tasks.keys():
+                self.scroll.vbox.removeWidget(self.scroll.tasks[id_])
+                self.scroll.tasks[id_].deleteLater()
+                del self.scroll.tasks[id_]
+                print('remove')
+            else:
+                print('id_ was not found')
 
         self.scroll.add_task = add_task
         self.scroll.remove_task = remove_task
@@ -108,21 +114,32 @@ class TaskListBuilder:
 class WidgetUpdateBuilder:
     def __init__(self, window):
         self.window = window
+        self.window.db = db_director.DataBase('./db.sqlite')
         self.connect()
 
     def connect(self):
         def update():
             print('Updating...')
-            # widget = QWidget(self.window)
-            # task = widgets_init.TaskWidget(1, 'test', dt(1, 1, 1, 1, 1), None, widget)
-            # widget.task = task
-            # self.window.home_widget_obj.futureScrollArea.vbox.removeWidget(0)
-            # self.window.home_widget_obj.nowScrollArea.vbox.addWidget(widget)
-            self.window.home_widget_obj.nowScrollArea.add_task(self.window, id_=1, name='Hello',
-                                                               description='None', start=dt(1, 1, 1, 1, 1),
-                                                               end=dt(1, 1, 1, 1, 1))
+            for data in self.window.db.now():
+                self.set_difference(self.window.home_widget_obj.nowScrollArea, data)
+            # self.window.home_widget_obj.nowScrollArea.add_task(self.window, id_=1, name='Hello',
+            #                                                    description='None', start=dt(1, 1, 1, 1, 1),
+            #                                                    end=dt(1, 1, 1, 1, 1))
+            # self.window.home_widget_obj.futureScrollArea.remove_task(id_)
 
         self.window.db_update = update
+
+    def set_difference(self, scroll, data):
+        scroll.tasks[data['id_']].set_text(data['name'])
+        scroll.tasks[data['id_']].set_times(data['start'], data['end'])
+
+    def add_news(self, scroll, datas):
+        for data in datas:
+            scroll.add_task(**data)
+
+    def remove_olds(self, scroll, datas):
+        for data in datas:
+            scroll.remove_task(data['id_'])
 
 
 class DaemonUpdateBuilder:

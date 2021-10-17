@@ -15,26 +15,24 @@ class DataBase:
 
     @staticmethod
     def format_result(elem):
-        return dict(zip('id_ name description start end'.split(), elem))
+        dct = dict(zip('id_ name description start end'.split(), elem))
+        dct['start'] = dt.strptime(dct['start'], '%Y-%m-%d %H:%M')
+        dct['end'] = dt.strptime(dct['end'], '%Y-%m-%d %H:%M')
+        return dct
 
     def all(self):
         return map(self.format_result, self.get_all())
 
-    def get_past(self):
+    def past(self):
         return filter(lambda x: x is not None and x['end'] < dt.now(), self.all())
 
-    def get_future(self):
+    def future(self):
         return filter(lambda x: x['start'] > dt.now(), self.all())
 
-    def get_now(self):
+    def now(self):
         return filter(lambda x: x['start'] < dt.now() and (x['end'] is None or x['end'] > dt.now()), self.all())
 
 
 if __name__ == '__main__':
     db = DataBase('db.sqlite')
-    print(db.get_all())
-    times = []
-    for x in db.get_all():
-        times.extend(x[3:])
-    times = [dt.strptime(x, '%Y-%m-%d %H:%M') for x in times]
-    print(times)
+    print(*db.all())
