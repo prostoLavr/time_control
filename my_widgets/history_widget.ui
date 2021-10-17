@@ -73,7 +73,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QScrollArea" name="historyScrollArea">
+     <widget class="QScrollArea" name="pastScrollArea">
       <property name="widgetResizable">
        <bool>true</bool>
       </property>

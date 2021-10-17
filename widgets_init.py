@@ -20,18 +20,12 @@ class HistoryWidget(history_widget.Ui_HistoryWidget, QWidget):
 class TaskWidget(task_widget.Ui_Frame, QFrame):
     def __init__(self, parent, id_, name: str, description: str, start: dt, end: dt or None):
         super(TaskWidget, self).__init__()
-        self.text = self.set_text(name)
-        self.start, self.duration, self.end = self.set_times(start, end)
+        self.text = name
+        self.start, self.duration, self.end = start, None, end
         self.setupUi(parent)
 
-    def text_for_label(self):
-        return '|'.join(map(str, (self.text, self.start, self.duration)))
+    def set_text(self, text):
+        self.label.setText(text)
 
-    @staticmethod
-    def set_text(text):
-        return text
-
-    @staticmethod
-    def set_times(start, end):
-        # duration = None if end is None else start + end
-        return start, None, end
+    def update_info(self, data):
+        self.set_text(data['name'])

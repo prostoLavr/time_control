@@ -25,11 +25,9 @@ class Director:
         builders.TaskListBuilder(window.home_widget_obj.nowScrollArea, window)
         builders.TaskListBuilder(window.home_widget_obj.futureScrollArea, window)
         builders.HistoryWidgetBuilder(window)
-        builders.TaskListBuilder(window.history_widget_obj.historyScrollArea, window)
+        builders.TaskListBuilder(window.history_widget_obj.pastScrollArea, window)
         builders.WidgetUpdateBuilder(window)
         builders.DaemonUpdateBuilder(window)
-        window.home_widget_obj.futureScrollArea.add_task(window, id_=1, name='tk', description='des', start=dt(1, 1, 1, 1, 1),
-                                                         end=dt(1, 1, 1, 1, 1))
         self.window = window
         return window
 
