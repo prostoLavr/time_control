@@ -1,7 +1,5 @@
 import ui_to_py
 
-ui_to_py.convert()
-
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import QtGui
 
@@ -9,6 +7,9 @@ from my_widgets.gui import Ui_MainWindow
 import builders
 
 import sys
+
+
+ui_to_py.nothing()
 
 
 class Director:

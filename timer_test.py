@@ -30,7 +30,6 @@ class Form(QWidget):
 
     def onIntReady(self):
         self.label.setText(str(int(self.label.text()) + 1))
-        # print(i)
 
 
 if __name__ == '__main__':

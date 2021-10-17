@@ -109,45 +109,56 @@ class WidgetUpdateBuilder:
     def __init__(self, window):
         self.window = window
         self.window.db = db_director.DataBase('./db.sqlite')
+
         self.connect()
+        self.history_find_connect()
+
+    def history_find_connect(self):
+        def btn_clicked():
+            start = self.window.history_widget_obj.startDateTimeEdit.dateTime().toString("yyyy-MM-dd hh:mm")
+            end = self.window.history_widget_obj.endDateTimeEdit.dateTime().toString("yyyy-MM-dd hh:mm")
+            print('find: ', start, '-', end)
+            print('found: ', *self.window.db.find(start, end))
+            self.connect_(self.window.history_widget_obj.pastScrollArea, self.window.db.find(start, end))
+        self.window.history_widget_obj.find_btn.clicked.connect(btn_clicked)
 
     def connect(self):
         def update():
             print('Updating...')
-            self.connect_(self.window.home_widget_obj.nowScrollArea, self.window.db.now)
-            self.connect_(self.window.home_widget_obj.futureScrollArea, self.window.db.future)
-            self.connect_(self.window.history_widget_obj.pastScrollArea, self.window.db.past)
+            self.connect_(self.window.home_widget_obj.nowScrollArea, self.window.db.now())
+            self.connect_(self.window.home_widget_obj.futureScrollArea, self.window.db.future())
 
         self.window.db_update = update
 
-    def connect_(self, scroll, data_foo):
-        self.add_news(scroll, data_foo)
-        self.set_differences(scroll, data_foo)
-        self.remove_olds(scroll, data_foo)
+    def connect_(self, scroll, data):
+        data = list(data)
+        self.add_news(scroll, data)
+        self.set_differences(scroll, data)
+        self.remove_olds(scroll, data)
 
     @staticmethod
-    def set_differences(scroll, data_foo):
+    def set_differences(scroll, data):
         keys = tuple(scroll.tasks.keys())
-        for data in data_foo():
-            if data['id_'] in keys:
+        for item in data:
+            if item['id_'] in keys:
                 # print('edit', data)
-                scroll.tasks[data['id_']].task.update_info(data)
+                scroll.tasks[item['id_']].task.update_info(item)
             else:
-                print(f'task {data["id_"]=} was not found while sef_difference')
+                print(f'task {item["id_"]=} was not found while sef_difference')
 
-    def add_news(self, scroll, data_foo):
+    def add_news(self, scroll, data):
         keys = tuple(scroll.tasks.keys())
-        for data in data_foo():
-            if data['id_'] not in keys:
-                print('add', data)
-                scroll.add_task(self.window, **data)
+        for item in data:
+            if item['id_'] not in keys:
+                print('add', item)
+                scroll.add_task(self.window, **item)
 
     @staticmethod
-    def remove_olds(scroll, data_foo):
-        data = list(data_foo())
+    def remove_olds(scroll, data):
+        data = list(data)
         for id_ in list(scroll.tasks.keys()):
             if id_ not in [x['id_'] for x in data]:
-                print('remove', id_)
+                print('remove', id_, 'from', scroll.objectName())
                 scroll.remove_task(id_)
 
 
