@@ -5,17 +5,14 @@ ui_to_py.convert()
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import QtGui
 
-import table_and_data
 from my_widgets.gui import Ui_MainWindow
 import builders
 
-from datetime import datetime as dt
 import sys
 
 
 class Director:
     def __init__(self):
-        self.data = table_and_data.DataManager()
         self.window = None
 
     def build_window(self):
