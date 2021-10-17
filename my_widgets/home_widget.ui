@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>390</height>
+    <height>504</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -28,7 +28,7 @@
      <x>0</x>
      <y>0</y>
      <width>489</width>
-     <height>381</height>
+     <height>501</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -68,7 +68,7 @@
       <item>
        <widget class="QPushButton" name="startTaskButton">
         <property name="text">
-         <string>Начать сейчас</string>
+         <string>Начать</string>
         </property>
        </widget>
       </item>
@@ -125,7 +125,7 @@
       <item>
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Текущие</string>
+         <string>На выполнении</string>
         </property>
        </widget>
       </item>
@@ -146,7 +146,7 @@
            <x>0</x>
            <y>0</y>
            <width>459</width>
-           <height>82</height>
+           <height>142</height>
           </rect>
          </property>
         </widget>
@@ -155,7 +155,7 @@
       <item>
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>Планы</string>
+         <string>Не сделаные</string>
         </property>
        </widget>
       </item>
@@ -192,7 +192,7 @@
            <x>0</x>
            <y>0</y>
            <width>459</width>
-           <height>82</height>
+           <height>142</height>
           </rect>
          </property>
          <property name="styleSheet">

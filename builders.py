@@ -7,6 +7,9 @@ import worker
 import db_director
 
 
+from datetime import datetime as dt
+from datetime import time as tm
+
 import widgets_init
 
 
@@ -183,6 +186,12 @@ class HomeAddTaskBuilder:
         self.connect()
 
     def connect(self):
+        time = dt.now()
+        minutes = (time.minute + 30) % 60
+        hours = (time.hour + (time.minute + 30) % 60) % 24
+        self.window.home_widget_obj.dateTimeStart.setDateTime(time.replace(hour=hours, minute=minutes))
+        self.window.home_widget_obj.timeDoing.setTime(tm(0, 30))
+
         self.window.home_widget_obj.taskNameEdit.setText('')
 
         def foo():
@@ -194,14 +203,13 @@ class HomeAddTaskBuilder:
 
         self.window.home_widget_obj.startTaskButton.clicked.connect(foo)
 
+        def foo():
+            name = self.window.home_widget_obj.taskNameEdit.text()
+            if name:
+                start = self.window.home_widget_obj.dateTimeStart.dateTime()
+                duration = self.window.home_widget_obj.timeDoing.time()
+                self.window.db.add_to_time(name, start, duration)
+                self.window.home_widget_obj.taskNameEdit.setText('')
+            self.window.db_update()
 
-class ResizeBuilder:
-    def __init__(self, window):
-        self.window = window
-        self.connect()
-
-    def connect(self):
-        print('gere')
-
-        # self.window.resizeEvent = resizeEvent
-        # self.window.resizeEvent(self.window, QtGui.QResizeEvent(QSize(300, 500), QSize(600, 100)))
+        self.window.home_widget_obj.addTaskButton.clicked.connect(foo)

@@ -27,7 +27,6 @@ class Director:
         builders.WidgetUpdateBuilder(window)
         builders.DaemonUpdateBuilder(window)
         builders.HomeAddTaskBuilder(window)
-        builders.ResizeBuilder(window)
         self.window = window
         return window
 

@@ -1,6 +1,9 @@
 import sqlite3 as sql
 from datetime import datetime as dt
+from datetime import timedelta as td
 import typing
+
+from PyQt5.QtCore import QDateTime, QTime
 
 from status import Status
 
@@ -57,6 +60,16 @@ class DataBase:
         else:
             time_str = f'"{time.strftime("%Y-%m-%d %H:%M")}"'
             self.cur.execute(f'UPDATE Tasks SET end = {time_str} WHERE id = {id_}')
+        self.con.commit()
+
+    def add_to_time(self, name: str, start: QDateTime, duration: QTime):
+        start = start.toPyDateTime()
+        duration = duration.toPyTime().minute
+        end = (start + td(minutes=duration)).strftime("%Y-%m-%d %H:%M")
+        start = start.strftime("%Y-%m-%d %H:%M")
+        id_ = self.cur.execute('SELECT MAX(id) from Tasks').fetchone()[0] + 1
+        values = f'{id_}, "{name}", "None", "{start}", "{end}", {Status.notdone.value}'
+        self.cur.execute(f'INSERT INTO Tasks VALUES ( {values} )')
         self.con.commit()
 
 
