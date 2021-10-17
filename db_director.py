@@ -2,6 +2,8 @@ import sqlite3 as sql
 from datetime import datetime as dt
 import typing
 
+from status import Status
+
 
 class DataBase:
     def __init__(self, path: str):
@@ -22,26 +24,26 @@ class DataBase:
         return map(self.format_result, self.get_all())
 
     def past(self):
-        return filter(lambda x: x is not None and x['end'] < dt.now(), self.all())
+        return map(self.format_result, self.cur.execute(f'SELECT * FROM Tasks WHERE status={Status.done.value}'))
 
     def future(self):
-        return filter(lambda x: x['start'] > dt.now(), self.all())
+        return map(self.format_result, self.cur.execute(f'SELECT * FROM Tasks WHERE status={Status.notdone.value}'))
 
     def now(self):
-        return filter(lambda x: x['start'] < dt.now() and (x['end'] is None or x['end'] > dt.now()), self.all())
+        return map(self.format_result, self.cur.execute(f'SELECT * FROM Tasks WHERE status={Status.run.value}'))
 
     def find(self, f_start: str, f_end: str):
         f_start, f_end = dt.strptime(f_start, '%Y-%m-%d %H:%M'), dt.strptime(f_end, '%Y-%m-%d %H:%M')
         return filter(lambda x: x['start'] > f_start and (x['end'] is None or x['end'] < f_end), self.all())
 
-    def set_task_status(self, id_, status):
+    def set_task_status(self, id_: int, status: Status):
         self.cur.execute(f'UPDATE Tasks SET status = {status} WHERE id = {id_}')
         self.con.commit()
 
-    def start_now(self, name):
+    def start_now(self, name: str):
         print('started with name', name)
         id_ = self.cur.execute('SELECT MAX(id) from Tasks').fetchone()[0] + 1
-        values = f'{id_}, "{name}", "None", "{dt.now().strftime("%Y-%m-%d %H:%M")}", NULL, 0'
+        values = f'{id_}, "{name}", "None", "{dt.now().strftime("%Y-%m-%d %H:%M")}", NULL, {Status.run.value}'
         q = f'INSERT INTO Tasks VALUES ( {values} )'
         print(q)
         self.cur.execute(q)
