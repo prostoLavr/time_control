@@ -2,6 +2,7 @@ import typing
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QMainWindow, QScrollArea
 from PyQt5.QtCore import Qt, QSize, QThread
+from PyQt5 import QtGui
 import worker
 import db_director
 
@@ -192,3 +193,15 @@ class HomeAddTaskBuilder:
             self.window.db_update()
 
         self.window.home_widget_obj.startTaskButton.clicked.connect(foo)
+
+
+class ResizeBuilder:
+    def __init__(self, window):
+        self.window = window
+        self.connect()
+
+    def connect(self):
+        print('gere')
+
+        # self.window.resizeEvent = resizeEvent
+        # self.window.resizeEvent(self.window, QtGui.QResizeEvent(QSize(300, 500), QSize(600, 100)))

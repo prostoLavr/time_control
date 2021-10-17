@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>433</height>
+    <height>586</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -24,7 +24,7 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="sizePolicy">
-    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
@@ -34,12 +34,12 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>831</width>
-      <height>611</height>
+      <width>541</width>
+      <height>341</height>
      </rect>
     </property>
     <property name="sizePolicy">
-     <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
       <horstretch>0</horstretch>
       <verstretch>0</verstretch>
      </sizepolicy>
@@ -47,7 +47,7 @@
     <property name="styleSheet">
      <string notr="true"/>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="4,6,6,6,6">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -56,6 +56,12 @@
      </property>
      <item>
       <widget class="QWidget" name="leftWidget" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="styleSheet">
         <string notr="true">QPushButton{
 border-radius: 0;
@@ -68,7 +74,7 @@ QPushButton:focus{
 background: &quot;#BBB&quot;
 }</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
+       <layout class="QVBoxLayout" name="verticalLayout" stretch="7,1">
         <property name="spacing">
          <number>2</number>
         </property>
@@ -83,30 +89,6 @@ background: &quot;#BBB&quot;
           <property name="verticalSpacing">
            <number>0</number>
           </property>
-          <item row="0" column="4">
-           <widget class="QPushButton" name="historyButton">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>История</string>
-            </property>
-            <property name="autoDefault">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="2">
            <widget class="QPushButton" name="statisticButton">
             <property name="sizePolicy">
@@ -114,6 +96,12 @@ background: &quot;#BBB&quot;
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>90</width>
+              <height>65</height>
+             </size>
             </property>
             <property name="font">
              <font>
@@ -145,6 +133,12 @@ background: &quot;#BBB&quot;
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="minimumSize">
+             <size>
+              <width>75</width>
+              <height>65</height>
+             </size>
+            </property>
             <property name="font">
              <font>
               <pointsize>12</pointsize>
@@ -164,6 +158,36 @@ background: &quot;#BBB&quot;
             </property>
            </widget>
           </item>
+          <item row="0" column="4">
+           <widget class="QPushButton" name="historyButton">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>75</width>
+              <height>65</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>История</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
@@ -174,10 +198,19 @@ background: &quot;#BBB&quot;
           <item>
            <widget class="QPushButton" name="settingsButton">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>85</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>Настройки</string>
@@ -192,7 +225,7 @@ background: &quot;#BBB&quot;
      <item>
       <widget class="QWidget" name="add_widget" native="true">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>

@@ -41,6 +41,11 @@ class TaskWidget(task_widget.Ui_Frame, QFrame):
         self.startTime.setText(data['start'].strftime('%d.%m %H:%M'))
         self.endTime.setText('...' if data['end'] is None else data['end'].strftime('%d.%m %H:%M'))
 
+    def set_run_by_btn(self):
+        self.my_parent.db.set_task_status(self.id_, Status.run.value)
+        self.set_run()
+        self.my_parent.db_update()
+
     def set_like_checkbox(self):
         value = Status.from_checkbox(self.checkBox.checkState())
         self.refactor(value)
@@ -58,10 +63,22 @@ class TaskWidget(task_widget.Ui_Frame, QFrame):
     def set_run(self):
         self.adaptateButton.setText('Завершить сейчас')
         self.start = dt.now()
-        self.adaptateButton.show()
+        self.adaptateButton.clicked.connect(self.set_done_by_btn)
+        if self.end is None:
+            self.adaptateButton.hide()
+        else:
+            self.adaptateButton.show()
+
+    def set_done_by_btn(self):
+        self.my_parent.db.set_task_status(self.id_, Status.done.value)
+        self.set_done()
+        self.end = dt.now()
+        self.checkBox.setChecked(True)
+        self.my_parent.db_update()
 
     def set_not_done(self):
         self.adaptateButton.setText('Начать')
+        self.adaptateButton.clicked.connect(self.set_run_by_btn)
         self.adaptateButton.show()
 
     def set_done(self):

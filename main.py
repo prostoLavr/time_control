@@ -17,7 +17,7 @@ class Director:
         self.window = None
 
     def build_window(self):
-        window = SetupMainWindow()
+        window = MainWindow()
         builders.MenuConnectBuilder(window)
         builders.HomeWidgetBuilder(window)
         builders.TaskListBuilder(window.home_widget_obj.nowScrollArea, window)
@@ -27,11 +27,12 @@ class Director:
         builders.WidgetUpdateBuilder(window)
         builders.DaemonUpdateBuilder(window)
         builders.HomeAddTaskBuilder(window)
+        builders.ResizeBuilder(window)
         self.window = window
         return window
 
 
-class SetupMainWindow(QMainWindow, Ui_MainWindow):
+class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setupUi(self)
@@ -39,9 +40,8 @@ class SetupMainWindow(QMainWindow, Ui_MainWindow):
 
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
         width, height = a0.size().width(), a0.size().height()
-        hp = height / 100
+        # print(width, height)
         self.centralwidget.setGeometry(0, 0, width, height)
-        self.settingsButton.setMaximumHeight(round(10 * hp))
         self.horizontalWidget.setGeometry(0, 0, width, height)
 
 
