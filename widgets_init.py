@@ -27,8 +27,11 @@ class TaskWidget(task_widget.Ui_Frame, QFrame):
         self.start, self.duration, self.end = start, None, end
         self.setupUi(parent)
 
-    def set_text(self, text):
-        self.label.setText(text)
+    def set_text(self, text: str):
+        self.title.setText(text)
 
-    def update_info(self, data):
+    def update_info(self, data: dict):
         self.set_text(data['name'])
+        self.startTime.setText(data['start'].strftime('%d.%m %H:%M'))
+        self.endTime.setText(data['end'].strftime('%d.%m %H:%M'))
+
