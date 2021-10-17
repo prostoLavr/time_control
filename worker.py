@@ -3,7 +3,7 @@ from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
 import time
 
 
-time_wait = 7
+time_wait = 90
 
 
 class Worker(QObject):

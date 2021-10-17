@@ -39,30 +39,34 @@ class TaskWidget(task_widget.Ui_Frame, QFrame):
     def update_info(self, data: dict):
         self.set_text(data['name'])
         self.startTime.setText(data['start'].strftime('%d.%m %H:%M'))
-        self.endTime.setText('Идёт...' if data['end'] is None else data['end'].strftime('%d.%m %H:%M'))
+        self.endTime.setText('...' if data['end'] is None else data['end'].strftime('%d.%m %H:%M'))
 
     def set_like_checkbox(self):
-        value = self.checkBox.checkState()
+        value = Status.from_checkbox(self.checkBox.checkState())
         self.refactor(value)
         self.my_parent.db_update()
 
     def refactor(self, value):
-        self.my_parent.db.set_task_status(self.id_, value)
-        if value == 1:
+        self.my_parent.db.set_task_status(self.id_, value.value)
+        if value == Status.run:
             self.set_run()
-        if value == 0:
+        if value == Status.notdone:
             self.set_not_done()
-        if value == 2:
+        if value == Status.done:
             self.set_done()
 
     def set_run(self):
-        self.adaptateButton.setText('Завершить')
-        self.adaptateButton.hide()
+        self.adaptateButton.setText('Завершить сейчас')
+        self.start = dt.now()
+        self.adaptateButton.show()
 
     def set_not_done(self):
         self.adaptateButton.setText('Начать')
         self.adaptateButton.show()
 
     def set_done(self):
+        if not self.end:
+            self.end = dt.now()
+            self.my_parent.db.set_end_time(self.id_, self.end)
         self.adaptateButton.setText('Завершено')
         self.adaptateButton.hide()
