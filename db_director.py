@@ -31,9 +31,9 @@ class DataBase:
 
     def find(self, f_start, f_end):
         f_start, f_end = dt.strptime(f_start, '%Y-%m-%d %H:%M'), dt.strptime(f_end, '%Y-%m-%d %H:%M')
-        return filter(lambda x: x['start'] < f_start and x['end'] < f_end, self.all())
+        return filter(lambda x: x['start'] > f_start and x['end'] < f_end, self.all())
 
 
 if __name__ == '__main__':
     db = DataBase('db.sqlite')
-    print(*db.all())
+    print(*db.find(*'2000-01-01 00:00 - 3000-01-01 00:00'.split(' - ')))
