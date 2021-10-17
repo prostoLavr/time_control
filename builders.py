@@ -90,7 +90,7 @@ class TaskListBuilder:
     def add_remove_setup(self):
         def add_task(parent, **param_for_task):
             widget = QWidget(parent)
-            task = widgets_init.TaskWidget(widget, **param_for_task)
+            task = widgets_init.TaskWidget(self.window, widget, **param_for_task)
             widget.task = task
             self.scroll.tasks.update({param_for_task['id_']: widget})
             self.scroll.vbox.addWidget(widget)

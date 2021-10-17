@@ -13,9 +13,9 @@ class DataBase:
 
     @staticmethod
     def format_result(elem: typing.Iterable):
-        dct = dict(zip('id_ name description start end'.split(), elem))
+        dct = dict(zip('id_ name description start end status'.split(), elem))
         dct['start'] = dt.strptime(dct['start'], '%Y-%m-%d %H:%M')
-        dct['end'] = dt.strptime(dct['end'], '%Y-%m-%d %H:%M')
+        dct['end'] = None if dct['end'] is None else dt.strptime(dct['end'], '%Y-%m-%d %H:%M')
         return dct
 
     def all(self):
@@ -32,7 +32,11 @@ class DataBase:
 
     def find(self, f_start: str, f_end: str):
         f_start, f_end = dt.strptime(f_start, '%Y-%m-%d %H:%M'), dt.strptime(f_end, '%Y-%m-%d %H:%M')
-        return filter(lambda x: x['start'] > f_start and x['end'] < f_end, self.all())
+        return filter(lambda x: x['start'] > f_start and (x['end'] is None or x['end'] < f_end), self.all())
+
+    def set_task_status(self, id_, status):
+        self.cur.execute(f'UPDATE Tasks SET status = {status} WHERE id = {id_}')
+        self.con.commit()
 
 
 if __name__ == '__main__':
