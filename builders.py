@@ -1,4 +1,6 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout
+import typing
+
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QMainWindow, QScrollArea
 from PyQt5.QtCore import Qt, QSize, QThread
 import worker
 import db_director
@@ -8,7 +10,7 @@ import widgets_init
 
 
 class HomeWidgetBuilder:
-    def __init__(self, window):
+    def __init__(self, window: QMainWindow):
         self.window = window
         self.widget_init()
 
@@ -17,7 +19,7 @@ class HomeWidgetBuilder:
 
 
 class HistoryWidgetBuilder:
-    def __init__(self, window):
+    def __init__(self, window: QMainWindow):
         self.window = window
         self.widget_init()
 
@@ -26,7 +28,7 @@ class HistoryWidgetBuilder:
 
 
 class MenuConnectBuilder:
-    def __init__(self, window):
+    def __init__(self, window: QMainWindow):
         self.window = window
         self.menu_buttons_connect()
         self.close_all()
@@ -66,7 +68,7 @@ class MenuConnectBuilder:
 
 
 class TaskListBuilder:
-    def __init__(self, scroll, parent):
+    def __init__(self, scroll: QScrollArea, parent: QWidget):
         self.window = parent
         self.scroll = scroll
         self.widget = QWidget()
@@ -93,7 +95,7 @@ class TaskListBuilder:
             self.scroll.tasks.update({param_for_task['id_']: widget})
             self.scroll.vbox.addWidget(widget)
 
-        def remove_task(id_):
+        def remove_task(id_: int):
             if id_ in self.scroll.tasks.keys():
                 self.scroll.vbox.removeWidget(self.scroll.tasks[id_])
                 self.scroll.tasks[id_].deleteLater()
@@ -106,7 +108,7 @@ class TaskListBuilder:
 
 
 class WidgetUpdateBuilder:
-    def __init__(self, window):
+    def __init__(self, window: QMainWindow):
         self.window = window
         self.window.db = db_director.DataBase('./db.sqlite')
 
@@ -130,14 +132,14 @@ class WidgetUpdateBuilder:
 
         self.window.db_update = update
 
-    def connect_(self, scroll, data):
+    def connect_(self, scroll: QScrollArea, data: typing.Iterable):
         data = list(data)
         self.add_news(scroll, data)
         self.set_differences(scroll, data)
         self.remove_olds(scroll, data)
 
     @staticmethod
-    def set_differences(scroll, data):
+    def set_differences(scroll: QScrollArea, data: typing.Iterable):
         keys = tuple(scroll.tasks.keys())
         for item in data:
             if item['id_'] in keys:
@@ -146,7 +148,7 @@ class WidgetUpdateBuilder:
             else:
                 print(f'task {item["id_"]=} was not found while sef_difference')
 
-    def add_news(self, scroll, data):
+    def add_news(self, scroll: QScrollArea, data: typing.Iterable):
         keys = tuple(scroll.tasks.keys())
         for item in data:
             if item['id_'] not in keys:
@@ -154,7 +156,7 @@ class WidgetUpdateBuilder:
                 scroll.add_task(self.window, **item)
 
     @staticmethod
-    def remove_olds(scroll, data):
+    def remove_olds(scroll: QScrollArea, data: typing.Iterable):
         data = list(data)
         for id_ in list(scroll.tasks.keys()):
             if id_ not in [x['id_'] for x in data]:
@@ -163,7 +165,7 @@ class WidgetUpdateBuilder:
 
 
 class DaemonUpdateBuilder:
-    def __init__(self, window):
+    def __init__(self, window: QMainWindow):
         window.obj = worker.Worker()
         window.thread = QThread()
 

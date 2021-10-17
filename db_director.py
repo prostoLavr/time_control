@@ -1,9 +1,10 @@
 import sqlite3 as sql
 from datetime import datetime as dt
+import typing
 
 
 class DataBase:
-    def __init__(self, path):
+    def __init__(self, path: str):
         self.con = sql.connect(path)
         self.cur = self.con.cursor()
 
@@ -11,7 +12,7 @@ class DataBase:
         return self.cur.execute('SELECT * FROM Tasks').fetchall()
 
     @staticmethod
-    def format_result(elem):
+    def format_result(elem: typing.Iterable):
         dct = dict(zip('id_ name description start end'.split(), elem))
         dct['start'] = dt.strptime(dct['start'], '%Y-%m-%d %H:%M')
         dct['end'] = dt.strptime(dct['end'], '%Y-%m-%d %H:%M')
@@ -29,7 +30,7 @@ class DataBase:
     def now(self):
         return filter(lambda x: x['start'] < dt.now() and (x['end'] is None or x['end'] > dt.now()), self.all())
 
-    def find(self, f_start, f_end):
+    def find(self, f_start: str, f_end: str):
         f_start, f_end = dt.strptime(f_start, '%Y-%m-%d %H:%M'), dt.strptime(f_end, '%Y-%m-%d %H:%M')
         return filter(lambda x: x['start'] > f_start and x['end'] < f_end, self.all())
 
