@@ -1,6 +1,6 @@
 import typing
 
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QMainWindow, QScrollArea
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QMainWindow, QScrollArea, QLabel, QWidgetItem, QSpacerItem
 from PyQt5.QtCore import Qt, QSize, QThread
 from PyQt5.QtWidgets import QGraphicsScene, QGraphicsView, QGraphicsEllipseItem
 from PyQt5.Qt import QColor
@@ -10,8 +10,7 @@ import db_director
 # from pyqtgraph import PlotWidget
 
 
-from datetime import datetime as dt
-from datetime import time as tm
+from datetime import datetime as dt, timedelta as td, time as tm
 
 import widgets_init
 
@@ -36,33 +35,72 @@ class StatisticWidgetBuilder:
 
 class GraphDiagramBuilder:
     def __init__(self, window):
-        # window.graph = PlotWidget(window.statistic_widget_obj.graphStatisticWidget)
-        # window.graph.plot([1, 3, 5], [1, 2, 3])
-        # window.graph.setGeometry(0, 0, 300, 150
         self.window = window
         window.scene = QGraphicsScene(window.statistic_widget_obj.graphStatisticWidget)
         window.update_graph = self.update
-        window.update_graph()
+
+    def db_query(self, count=6):
+        state = self.window.statistic_widget_obj.comboBox.currentText()
+        print('state: ', state)
+        state_dict = {'День': td(days=1), 'Неделя': td(weeks=1), 'Полмесяца': td(days=15), 'Месяц': td(days=30),
+                      'Квартал': td(days=90), 'Полугодие': td(days=180), 'Год': td(days=365)}
+        db_respond = self.window.db.find_by_pytime(dt.now() - state_dict[state], dt.now())
+        times = []
+        keys = []
+        for i in db_respond:
+            if i['name'].lower() not in keys:
+                keys.append(i['name'])
+                times.append(i['end'] - i['start'])
+            else:
+                times[keys.index(i['name'])] += i['end'] - i['start']
+        lst = sorted(zip(keys, map(lambda x: x.seconds, times)), key=lambda x: x[1], reverse=True)
+        print(lst)
+        return [x[0] for x in lst[:count]], [x[1] for x in lst[:count]]
 
     def update(self):
         window = self.window
-        families = [6, 9, 15]
-        set_angle = 0
-        colours = []
-        total = sum(families)
+        self.clear_layout(window.statistic_widget_obj.textStatisticLayout)
+        names, times = self.db_query()
+        if not times:
+            window.statistic_widget_obj.graphStatisticWidget.hide()
+            return
+        window.statistic_widget_obj.graphStatisticWidget.show()
+        colors_ = ((200, 0, 0), (250, 250, 0), (0, 200, 0), (0, 200, 200), (0, 0, 200), (200, 0, 200), (0, 0, 0))
+        colors = [QColor(*i) for i in colors_]
 
-        for _ in range(len(families)):
-            colours.append(QColor(*[random.randrange(0, 255) for _ in range(3)]))
+        self.draw(times, colors, window)
+        self.set_texts(names, times, colors, window)
 
-        for num, family in enumerate(families):
+    @classmethod
+    def set_texts(cls, names, times, colors, window):
+        for name, time, color in zip(names, times, colors):
+            lbl = QLabel(f'{name.capitalize()} - {time}')
+            lbl.setStyleSheet('QLabel { color: %s }' % (color.name()))
+            window.statistic_widget_obj.textStatisticLayout.addWidget(lbl)
+
+    @classmethod
+    def clear_layout(cls, layout):
+        for i in reversed(range(layout.count())):
+            item = layout.itemAt(i)
+            if isinstance(item, QWidgetItem):
+                item.widget().close()
+            elif not isinstance(item, QSpacerItem):
+                cls.clear_layout(item.layout())
+            layout.removeItem(item)
+
+    @staticmethod
+    def draw(times, colors, window):
+        start_angle = 0
+        total = sum(times)
+        for num, time in enumerate(times):
             # Max span is 5760, so we have to calculate corresponding span angle
-            angle = round(family * 5760 / total)
+            angle = round(time * 5760 / total)
             ellipse = QGraphicsEllipseItem(0, 0, 300, 300)
             ellipse.setPos(0, 0)
-            ellipse.setStartAngle(set_angle)
+            ellipse.setStartAngle(start_angle)
             ellipse.setSpanAngle(angle)
-            ellipse.setBrush(colours[num])
-            set_angle += angle
+            ellipse.setBrush(colors[num])
+            start_angle += angle
             window.scene.addItem(ellipse)
 
         window.view = QGraphicsView(window.scene, window.statistic_widget_obj.graphStatisticWidget)

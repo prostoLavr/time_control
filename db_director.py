@@ -37,9 +37,12 @@ class DataBase:
         return map(self.format_result, self.cur.execute(f'SELECT * FROM Tasks WHERE status={Status.run.value}'))
 
     def find(self, f_start: str, f_end: str):
-        f_start, f_end = dt.strptime(f_start, '%Y-%m-%d %H:%M'), dt.strptime(f_end, '%Y-%m-%d %H:%M')
-        return filter(lambda x: x['status'] is Status.done and x['start'] > f_start and
-                                (x['end'] is None or x['end'] < f_end), self.all())
+        start, end = dt.strptime(f_start, '%Y-%m-%d %H:%M'), dt.strptime(f_end, '%Y-%m-%d %H:%M')
+        return self.find_by_pytime(start, end)
+
+    def find_by_pytime(self, start: dt, end: dt):
+        return filter(lambda x: x['status'] is Status.done and x['start'] > start and
+                      (x['end'] is None or x['end'] < end), self.all())
 
     def set_task_status(self, id_: int, status: Status):
         self.cur.execute(f'UPDATE Tasks SET status = {status} WHERE id = {id_}')
