@@ -4,7 +4,6 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QMainWindow, QScrollArea, QLab
 from PyQt5.QtCore import Qt, QSize, QThread
 from PyQt5.QtWidgets import QGraphicsScene, QGraphicsView, QGraphicsEllipseItem
 from PyQt5.Qt import QColor
-import random
 import worker
 import db_director
 # from pyqtgraph import PlotWidget
@@ -79,7 +78,16 @@ class GraphDiagramBuilder:
     @classmethod
     def set_texts(cls, names, times, colors, window):
         for name, time, color in zip(names, times, colors):
-            lbl = QLabel(f'{name.capitalize()} - {time}')
+            hours = time // 60
+            minutes = time % 60
+            text = f'{name.capitalize()} -'
+            if hours:
+                text += f' {hours} час' if hours % 10 == 1 else f' {hours} часов'
+            if minutes:
+                text += f' {hours} минута' if hours % 10 == 1 else f' {hours} минут'
+            if not hours and not minutes:
+                text += ' Меньше минуты'
+            lbl = QLabel(text)
             lbl.setStyleSheet('QLabel { color: %s }' % (color.name()))
             window.statistic_widget_obj.textStatisticLayout.addWidget(lbl)
 
