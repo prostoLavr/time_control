@@ -9,22 +9,27 @@ import builders
 import sys
 
 
-ui_to_py.nothing()
-
-
 class Director:
     @staticmethod
     def build_window():
         window = MainWindow()
         builders.MenuConnectBuilder(window)
+
         builders.HomeWidgetBuilder(window)
         builders.TaskListBuilder(window.home_widget_obj.nowScrollArea, window)
         builders.TaskListBuilder(window.home_widget_obj.futureScrollArea, window)
+
         builders.HistoryWidgetBuilder(window)
         builders.TaskListBuilder(window.history_widget_obj.pastScrollArea, window)
+
+        builders.StatisticWidgetBuilder(window)
+        builders.GraphDiagramBuilder(window)
+
         builders.WidgetUpdateBuilder(window)
         builders.DaemonUpdateBuilder(window)
+
         builders.HomeAddTaskBuilder(window)
+
         return window
 
 
@@ -36,7 +41,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
         width, height = a0.size().width(), a0.size().height()
-        # print(width, height)
         self.centralwidget.setGeometry(0, 0, width, height)
         self.horizontalWidget.setGeometry(0, 0, width, height)
 

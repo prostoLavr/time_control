@@ -1,11 +1,8 @@
 import os
 
 dr = './my_widgets/'
-lst = 'gui home_widget task_widget history_widget'.split()
-
-for file in lst:
-    os.system(f'pyuic5 {dr}{file}.ui -o {dr}{file}.py')
-    print('convert')
+for file in filter(lambda x: x.endswith('.ui'), os.listdir(dr)):
+    os.system(f'pyuic5 {dr}{file} -o {dr}{file[:-3]}.py')
 
 
 def nothing():

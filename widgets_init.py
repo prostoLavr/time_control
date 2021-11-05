@@ -1,8 +1,9 @@
 from PyQt5.QtWidgets import QWidget, QFrame
 # from PyQt5.QtCore import QObject
+
 from status import Status
 
-from my_widgets import home_widget, task_widget, history_widget
+from my_widgets import home_widget, task_widget, history_widget, statistic_widget
 
 from datetime import datetime as dt
 
@@ -16,6 +17,12 @@ class HomeWidget(home_widget.Ui_Frame, QWidget):
 class HistoryWidget(history_widget.Ui_HistoryWidget, QWidget):
     def __init__(self, parent: QWidget):
         super(HistoryWidget, self).__init__()
+        self.setupUi(parent)
+
+
+class StatisticWidget(statistic_widget.Ui_StatisticWidget, QWidget):
+    def __init__(self, parent: QWidget):
+        super(StatisticWidget, self).__init__()
         self.setupUi(parent)
 
 

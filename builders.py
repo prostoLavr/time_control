@@ -2,8 +2,12 @@ import typing
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QMainWindow, QScrollArea
 from PyQt5.QtCore import Qt, QSize, QThread
+from PyQt5.QtWidgets import QGraphicsScene, QGraphicsView, QGraphicsEllipseItem
+from PyQt5.Qt import QColor
+import random
 import worker
 import db_director
+# from pyqtgraph import PlotWidget
 
 
 from datetime import datetime as dt
@@ -21,13 +25,61 @@ class HomeWidgetBuilder:
         self.window.home_widget_obj = widgets_init.HomeWidget(self.window.add_widget)
 
 
-class HistoryWidgetBuilder:
+class StatisticWidgetBuilder:
     def __init__(self, window: QMainWindow):
         self.window = window
         self.widget_init()
 
     def widget_init(self):
+        self.window.statistic_widget_obj = widgets_init.StatisticWidget(self.window.statistic_widget)
+
+
+class GraphDiagramBuilder:
+    def __init__(self, window):
+        # window.graph = PlotWidget(window.statistic_widget_obj.graphStatisticWidget)
+        # window.graph.plot([1, 3, 5], [1, 2, 3])
+        # window.graph.setGeometry(0, 0, 300, 150
+        self.window = window
+        window.scene = QGraphicsScene(window.statistic_widget_obj.graphStatisticWidget)
+        window.update_graph = self.update
+        window.update_graph()
+
+    def update(self):
+        window = self.window
+        families = [6, 9, 15]
+        set_angle = 0
+        colours = []
+        total = sum(families)
+
+        for _ in range(len(families)):
+            colours.append(QColor(*[random.randrange(0, 255) for _ in range(3)]))
+
+        for num, family in enumerate(families):
+            # Max span is 5760, so we have to calculate corresponding span angle
+            angle = round(family * 5760 / total)
+            ellipse = QGraphicsEllipseItem(0, 0, 300, 300)
+            ellipse.setPos(0, 0)
+            ellipse.setStartAngle(set_angle)
+            ellipse.setSpanAngle(angle)
+            ellipse.setBrush(colours[num])
+            set_angle += angle
+            window.scene.addItem(ellipse)
+
+        window.view = QGraphicsView(window.scene, window.statistic_widget_obj.graphStatisticWidget)
+        window.view.show()
+
+
+class HistoryWidgetBuilder:
+    def __init__(self, window: QMainWindow):
+        self.window = window
+        self.widget_init()
+        self.diagram_add()
+
+    def widget_init(self):
         self.window.history_widget_obj = widgets_init.HistoryWidget(self.window.history_widget)
+
+    def diagram_add(self):
+        pass
 
 
 class MenuConnectBuilder:
@@ -52,7 +104,7 @@ class MenuConnectBuilder:
                                           'История': self.show_history, 'Настройки': self.close_all}
 
     def close_all(self):
-        self.window.statictic_widget.hide()
+        self.window.statistic_widget.hide()
         self.window.add_widget.hide()
         self.window.history_widget.hide()
         self.window.settings_widget.hide()
@@ -64,7 +116,8 @@ class MenuConnectBuilder:
 
     def show_statistic(self):
         self.close_all()
-        self.window.statictic_widget.show()
+        self.window.update_graph()
+        self.window.statistic_widget.show()
 
     def show_history(self):
         self.close_all()

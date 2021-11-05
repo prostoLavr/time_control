@@ -118,7 +118,7 @@
      </layout>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="bottomVerticalLayout">
+     <layout class="QVBoxLayout" name="bottomVerticalLayout" stretch="0,2,0,0,3">
       <property name="spacing">
        <number>0</number>
       </property>
@@ -149,7 +149,7 @@
            <x>0</x>
            <y>0</y>
            <width>459</width>
-           <height>162</height>
+           <height>129</height>
           </rect>
          </property>
         </widget>
@@ -195,7 +195,7 @@
            <x>0</x>
            <y>0</y>
            <width>459</width>
-           <height>162</height>
+           <height>195</height>
           </rect>
          </property>
          <property name="styleSheet">
