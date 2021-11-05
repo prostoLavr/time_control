@@ -41,16 +41,27 @@ class DataBase:
         return self.find_by_pytime(start, end)
 
     def find_by_pytime(self, start: dt, end: dt):
-        return filter(lambda x: x['status'] is Status.done and x['start'] > start and
-                      (x['end'] is None or x['end'] < end), self.all())
+        return filter(lambda x: x['status'] is Status.done and x['start'] >= start and
+                      (x['end'] is None or x['end'] <= end), self.all())
 
     def set_task_status(self, id_: int, status: Status):
         self.cur.execute(f'UPDATE Tasks SET status = {status} WHERE id = {id_}')
         self.con.commit()
 
-    def start_now(self, name: str):
+    def start_now(self, name: str, _n=0):
         print('started with name', name)
-        id_ = self.cur.execute('SELECT MAX(id) from Tasks').fetchone()[0] + 1
+        print(self.cur.execute('SELECT id FROM Tasks').fetchone())
+        try:
+            id_ = self.cur.execute('SELECT MAX(id) from Tasks').fetchone()[0] + 1 + _n
+        except sql.IntegrityError:
+            print('Ошибка индекса, выполняется попытка исправления...')
+            self.start_now(name, _n+1)
+            if _n > 10:
+                raise ValueError('Ошибка добавления индекса в базу данных.')
+        except TypeError:
+            id_ = 0
+        if _n:
+            print('Исправленно.')
         values = f'{id_}, "{name}", "None", "{dt.now().strftime("%Y-%m-%d %H:%M")}", NULL, {Status.run.value}'
         q = f'INSERT INTO Tasks VALUES ( {values} )'
         print(q)

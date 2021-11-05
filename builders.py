@@ -38,6 +38,7 @@ class GraphDiagramBuilder:
         self.window = window
         window.scene = QGraphicsScene(window.statistic_widget_obj.graphStatisticWidget)
         window.update_graph = self.update
+        window.statistic_widget_obj.comboBox.currentIndexChanged.connect(self.update)
 
     def db_query(self, count=6):
         state = self.window.statistic_widget_obj.comboBox.currentText()
@@ -49,23 +50,27 @@ class GraphDiagramBuilder:
         keys = []
         for i in db_respond:
             if i['name'].lower() not in keys:
-                keys.append(i['name'])
+                keys.append(i['name'].lower())
                 times.append(i['end'] - i['start'])
             else:
-                times[keys.index(i['name'])] += i['end'] - i['start']
+                times[keys.index(i['name'].lower())] += i['end'] - i['start']
         lst = sorted(zip(keys, map(lambda x: x.seconds, times)), key=lambda x: x[1], reverse=True)
-        print(lst)
-        return [x[0] for x in lst[:count]], [x[1] for x in lst[:count]]
+        other_time = sum(times[count:])
+        res_names = [x[0] for x in lst[:count - 1]]
+        res_names.append('Другое')
+        res_times = [x[1] for x in lst[:count - 1]]
+        res_times.append(other_time)
+        return res_names, res_times
 
     def update(self):
         window = self.window
         self.clear_layout(window.statistic_widget_obj.textStatisticLayout)
         names, times = self.db_query()
-        if not times:
+        if not times or not sum(times):
             window.statistic_widget_obj.graphStatisticWidget.hide()
             return
         window.statistic_widget_obj.graphStatisticWidget.show()
-        colors_ = ((200, 0, 0), (250, 250, 0), (0, 200, 0), (0, 200, 200), (0, 0, 200), (200, 0, 200), (0, 0, 0))
+        colors_ = ((200, 0, 0), (250, 150, 0), (0, 200, 0), (0, 200, 200), (0, 0, 200), (200, 0, 200), (0, 0, 0))
         colors = [QColor(*i) for i in colors_]
 
         self.draw(times, colors, window)
@@ -104,6 +109,8 @@ class GraphDiagramBuilder:
             window.scene.addItem(ellipse)
 
         window.view = QGraphicsView(window.scene, window.statistic_widget_obj.graphStatisticWidget)
+        window.view.setHorizontalScrollBarPolicy(False)
+        window.view.setVerticalScrollBarPolicy(False)
         window.view.show()
 
 
@@ -111,13 +118,9 @@ class HistoryWidgetBuilder:
     def __init__(self, window: QMainWindow):
         self.window = window
         self.widget_init()
-        self.diagram_add()
 
     def widget_init(self):
         self.window.history_widget_obj = widgets_init.HistoryWidget(self.window.history_widget)
-
-    def diagram_add(self):
-        pass
 
 
 class MenuConnectBuilder:
