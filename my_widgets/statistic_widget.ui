@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>StatisticWidget</class>
+ <widget class="QWidget" name="StatisticWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>449</width>
+    <height>559</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>451</width>
+     <height>551</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,5">
+    <property name="leftMargin">
+     <number>5</number>
+    </property>
+    <property name="topMargin">
+     <number>5</number>
+    </property>
+    <property name="rightMargin">
+     <number>5</number>
+    </property>
+    <property name="bottomMargin">
+     <number>5</number>
+    </property>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Промежуток времени:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboBox">
+        <item>
+         <property name="text">
+          <string>День</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Неделя</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Полмесяца</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Месяц</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Квартал</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Полугодие</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Год</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="textStatisticLayout"/>
+    </item>
+    <item>
+     <widget class="QWidget" name="graphStatisticWidget" native="true"/>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
