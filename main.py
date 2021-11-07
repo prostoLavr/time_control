@@ -47,6 +47,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
 if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = Director.build_window()
-    sys.exit(app.exec_())
+    app = None
+    try:
+        app = QApplication(sys.argv)
+        ex = Director.build_window()
+    except:
+        pass
+    finally:
+        sys.exit(app.exec_())

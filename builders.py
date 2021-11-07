@@ -6,7 +6,6 @@ from PyQt5.QtWidgets import QGraphicsScene, QGraphicsView, QGraphicsEllipseItem
 from PyQt5.Qt import QColor
 import worker
 import db_director
-# from pyqtgraph import PlotWidget
 
 
 from datetime import datetime as dt, timedelta as td, time as tm
@@ -41,7 +40,6 @@ class GraphDiagramBuilder:
 
     def db_query(self, count=6):
         state = self.window.statistic_widget_obj.comboBox.currentText()
-        print('state: ', state)
         state_dict = {'День': td(days=1), 'Неделя': td(weeks=1), 'Полмесяца': td(days=15), 'Месяц': td(days=30),
                       'Квартал': td(days=90), 'Полугодие': td(days=180), 'Год': td(days=365)}
         db_respond = self.window.db.find_by_pytime(dt.now() - state_dict[state], dt.now())
@@ -78,13 +76,14 @@ class GraphDiagramBuilder:
     @classmethod
     def set_texts(cls, names, times, colors, window):
         for name, time, color in zip(names, times, colors):
+            time = time // 60
             hours = time // 60
             minutes = time % 60
             text = f'{name.capitalize()} -'
             if hours:
                 text += f' {hours} час' if hours % 10 == 1 else f' {hours} часов'
             if minutes:
-                text += f' {hours} минута' if hours % 10 == 1 else f' {hours} минут'
+                text += f' {minutes} минута' if minutes % 10 == 1 else f' {minutes} минут'
             if not hours and not minutes:
                 text += ' Меньше минуты'
             lbl = QLabel(text)
@@ -141,7 +140,6 @@ class MenuConnectBuilder:
         for button in self.window.menu_buttons:
             button.setStyleSheet('')
         self.window.sender().setStyleSheet('background: "#AAA";')
-        print(f'Открыта вкладка {self.window.sender().text()}')
         self.window.buttons_action_dct[self.window.sender().text()]()
 
     def menu_buttons_connect(self):
@@ -226,14 +224,11 @@ class WidgetUpdateBuilder:
         def btn_clicked():
             start = self.window.history_widget_obj.startDateTimeEdit.dateTime().toString("yyyy-MM-dd hh:mm")
             end = self.window.history_widget_obj.endDateTimeEdit.dateTime().toString("yyyy-MM-dd hh:mm")
-            print('find: ', start, '-', end)
-            print('found: ', *self.window.db.find(start, end))
             self.connect_(self.window.history_widget_obj.pastScrollArea, self.window.db.find(start, end))
         self.window.history_widget_obj.find_btn.clicked.connect(btn_clicked)
 
     def connect(self):
         def update():
-            print('Updating...')
             self.connect_(self.window.home_widget_obj.nowScrollArea, self.window.db.now())
             self.connect_(self.window.home_widget_obj.futureScrollArea, self.window.db.future())
 
@@ -250,16 +245,14 @@ class WidgetUpdateBuilder:
         keys = tuple(scroll.tasks.keys())
         for item in data:
             if item['id_'] in keys:
-                # print('edit', data)
                 scroll.tasks[item['id_']].task.update_info(item)
             else:
-                print(f'task {item["id_"]=} was not found while sef_difference')
+                print(f'task {item["id_"]=} was not found while set_difference')
 
     def add_news(self, scroll: QScrollArea, data: typing.Iterable):
         keys = tuple(scroll.tasks.keys())
         for item in data:
             if item['id_'] not in keys:
-                print('add', item)
                 scroll.add_task(self.window, **item)
 
     @staticmethod
@@ -267,7 +260,6 @@ class WidgetUpdateBuilder:
         data = list(data)
         for id_ in list(scroll.tasks.keys()):
             if id_ not in [x['id_'] for x in data]:
-                print('remove', id_, 'from', scroll.objectName())
                 scroll.remove_task(id_)
 
 
@@ -290,7 +282,7 @@ class HomeAddTaskBuilder:
 
     def connect(self):
         self.window.home_widget_obj.taskNameEdit.setText('')
-        self.time_set()
+        self.time_set(self)
 
         def foo():
             name = self.window.home_widget_obj.taskNameEdit.text()
@@ -312,6 +304,7 @@ class HomeAddTaskBuilder:
 
         self.window.home_widget_obj.addTaskButton.clicked.connect(foo)
 
+    @staticmethod
     def time_set(self):
         time = dt.now()
         minutes = (time.minute + 30) % 60

@@ -48,20 +48,25 @@ class DataBase:
         self.cur.execute(f'UPDATE Tasks SET status = {status} WHERE id = {id_}')
         self.con.commit()
 
-    def start_now(self, name: str, _n=0):
-        print('started with name', name)
-        print(self.cur.execute('SELECT id FROM Tasks').fetchone())
+    def get_max_id(self, _n=0):
         try:
             id_ = self.cur.execute('SELECT MAX(id) from Tasks').fetchone()[0] + 1 + _n
         except sql.IntegrityError:
-            print('Ошибка индекса, выполняется попытка исправления...')
-            self.start_now(name, _n+1)
-            if _n > 10:
-                raise ValueError('Ошибка добавления индекса в базу данных.')
+            print('Index error, trying use other id...')
+            if _n > 5:
+                raise IndexError('Database index error')
+            self.get_max_id(_n+1)
+            return
         except TypeError:
             id_ = 0
         if _n:
             print('Исправленно.')
+        return id_
+
+    def start_now(self, name: str):
+        print('started with name', name)
+        print(self.cur.execute('SELECT id FROM Tasks').fetchone())
+        id_ = self.get_max_id()
         values = f'{id_}, "{name}", "None", "{dt.now().strftime("%Y-%m-%d %H:%M")}", NULL, {Status.run.value}'
         q = f'INSERT INTO Tasks VALUES ( {values} )'
         print(q)
@@ -78,12 +83,19 @@ class DataBase:
 
     def add_to_time(self, name: str, start: QDateTime, duration: QTime):
         start = start.toPyDateTime()
-        duration = duration.toPyTime().minute
-        end = (start + td(minutes=duration)).strftime("%Y-%m-%d %H:%M")
+        duration = duration.toPyTime()
+        print('add with', start, duration)
+        end = (start + td(hours=duration.hour, minutes=duration.minute)).strftime("%Y-%m-%d %H:%M")
         start = start.strftime("%Y-%m-%d %H:%M")
-        id_ = self.cur.execute('SELECT MAX(id) from Tasks').fetchone()[0] + 1
+        id_ = self.get_max_id()
         values = f'{id_}, "{name}", "None", "{start}", "{end}", {Status.notdone.value}'
         self.cur.execute(f'INSERT INTO Tasks VALUES ( {values} )')
+        self.con.commit()
+
+    def remove_task(self, task_id):
+        id_list = map(lambda x: x[0], self.cur.execute('SELECT id FROM Tasks').fetchall())
+        assert task_id in id_list, "Task id must be in id's list"
+        self.cur.execute(f'DELETE FROM Tasks WHERE id = {task_id}')
         self.con.commit()
 
 

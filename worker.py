@@ -1,9 +1,8 @@
-# worker.py
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
 import time
 
 
-time_wait = 90
+time_wait = 5
 
 
 class Worker(QObject):

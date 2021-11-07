@@ -39,6 +39,7 @@ class TaskWidget(task_widget.Ui_Frame, QFrame):
         self.checkBox.setChecked(status == Status.done)
         self.refactor(status)
         self.checkBox.clicked.connect(self.set_like_checkbox)
+        self.EditButton.clicked.connect(self.remove)
 
     def set_text(self, text: str):
         self.title.setText(text)
@@ -98,3 +99,10 @@ class TaskWidget(task_widget.Ui_Frame, QFrame):
             self.my_parent.db.set_end_time(self.id_, self.end)
         self.adaptateButton.setText('Завершено')
         self.adaptateButton.hide()
+
+    def remove(self):
+        self.adaptateButton.hide()
+        self.EditButton.hide()
+        self.checkBox.hide()
+        self.my_parent.db.remove_task(self.id_)
+        self.my_parent.db_update()
