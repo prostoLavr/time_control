@@ -14,3 +14,5 @@ activate venv in progrgamm directory<br>
 <h3>Step 2</h3>
 
 `python app.py`
+<h2>Настройка</h2>
+Используйте configuration.py
