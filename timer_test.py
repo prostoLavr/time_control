@@ -1,4 +1,4 @@
-# main.py
+# app.py
 from PyQt5.QtCore import QThread
 from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QGridLayout
 import sys

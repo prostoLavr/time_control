@@ -143,8 +143,7 @@ class MenuConnectBuilder:
         self.window.buttons_action_dct[self.window.sender().text()]()
 
     def menu_buttons_connect(self):
-        self.window.menu_buttons = (self.window.homeButton, self.window.historyButton, self.window.statisticButton,
-                                    self.window.settingsButton)
+        self.window.menu_buttons = (self.window.homeButton, self.window.historyButton, self.window.statisticButton)
         for button in self.window.menu_buttons:
             button.clicked.connect(self.menu_button_click)
         self.window.buttons_action_dct = {'Домой': self.show_home, 'Статистика': self.show_statistic,
@@ -154,7 +153,6 @@ class MenuConnectBuilder:
         self.window.statistic_widget.hide()
         self.window.add_widget.hide()
         self.window.history_widget.hide()
-        self.window.settings_widget.hide()
 
     def show_home(self):
         self.close_all()

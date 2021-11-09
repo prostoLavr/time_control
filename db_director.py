@@ -60,16 +60,13 @@ class DataBase:
         except TypeError:
             id_ = 0
         if _n:
-            print('Исправленно.')
+            print('Fix.')
         return id_
 
     def start_now(self, name: str):
-        print('started with name', name)
-        print(self.cur.execute('SELECT id FROM Tasks').fetchone())
         id_ = self.get_max_id()
         values = f'{id_}, "{name}", "None", "{dt.now().strftime("%Y-%m-%d %H:%M")}", NULL, {Status.run.value}'
         q = f'INSERT INTO Tasks VALUES ( {values} )'
-        print(q)
         self.cur.execute(q)
         self.con.commit()
 
@@ -84,7 +81,6 @@ class DataBase:
     def add_to_time(self, name: str, start: QDateTime, duration: QTime):
         start = start.toPyDateTime()
         duration = duration.toPyTime()
-        print('add with', start, duration)
         end = (start + td(hours=duration.hour, minutes=duration.minute)).strftime("%Y-%m-%d %H:%M")
         start = start.strftime("%Y-%m-%d %H:%M")
         id_ = self.get_max_id()
