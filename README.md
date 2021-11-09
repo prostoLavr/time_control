@@ -1,14 +1,16 @@
-# time_control
-Install:
-1. Install Python 3 with PyQt
-/
-2. $ cd /path/to/programm/
-/
-3. chmod 777 ./run.sh
-/
+<h1>QUICKTIME</h1>
+<h2>Linux systems:</h2>
+<h3>Install:</h3>
 
-Run:
-1. $ /path/to/programm/run.sh
-/
-2. Enjoy no working project!
+`chmod 777 path/to/programm/run.sh`
 
+<h3>Run:</h3>
+
+`path/to/programm/run.sh`
+
+<h2>Windows (solution can be non-work):</h2>
+<h3>Step 1</h3>
+activate venv in progrgamm directory<br>
+<h3>Step 2</h3>
+
+`python app.py`
