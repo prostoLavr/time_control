@@ -1,4 +1,5 @@
 import typing
+import sys
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QMainWindow, QScrollArea, QLabel, QWidgetItem, QSpacerItem
 from PyQt5.QtCore import Qt, QSize, QThread
@@ -11,6 +12,9 @@ import db_director
 from datetime import datetime as dt, timedelta as td, time as tm
 
 import widgets_init
+
+
+db_path = sys.argv[1]
 
 
 class HomeWidgetBuilder:
@@ -213,7 +217,7 @@ class TaskListBuilder:
 class WidgetUpdateBuilder:
     def __init__(self, window: QMainWindow):
         self.window = window
-        self.window.db = db_director.DataBase('./db.sqlite')
+        self.window.db = db_director.DataBase(db_path)
 
         self.connect()
         self.history_find_connect()
@@ -309,3 +313,4 @@ class HomeAddTaskBuilder:
         hours = (time.hour + (time.minute + 30) % 60) % 24
         self.window.home_widget_obj.dateTimeStart.setDateTime(time.replace(hour=hours, minute=minutes))
         self.window.home_widget_obj.timeDoing.setTime(tm(0, 30))
+
