@@ -44,10 +44,17 @@ class DataBase:
         return filter(lambda x: x['status'] is Status.done and x['start'] >= start and
                       (x['end'] is None or x['end'] <= end), self.all())
 
-    def set_task_status(self, id_: int, status: Status):
+    def set_task_status(self, id_: int, status: Status, time_start_now=False,
+                        time_end_now=False):
         self.cur.execute(f'UPDATE Tasks SET status = {status} WHERE id = {id_}')
+        if time_start_now:
+            start_time = dt.now().strftime("%Y-%m-%d %H:%M")
+            self.cur.execute(f'UPDATE Tasks SET start = "{start_time}" WHERE id = {id_}')
+        if time_end_now:
+            end_time = dt.now().strftime("%Y-%m-%d %H:%M")
+            self.cur.execute(f'UPDATE Tasks SET end = "{end_time}" WHERE id = {id_}')
         self.con.commit()
-
+            
     def get_max_id(self, _n=0):
         try:
             id_ = self.cur.execute('SELECT MAX(id) from Tasks').fetchone()[0] + 1 + _n
@@ -90,9 +97,12 @@ class DataBase:
 
     def remove_task(self, task_id):
         id_list = map(lambda x: x[0], self.cur.execute('SELECT id FROM Tasks').fetchall())
-        assert task_id in id_list, "Task id must be in id's list"
-        self.cur.execute(f'DELETE FROM Tasks WHERE id = {task_id}')
-        self.con.commit()
+        try:
+            self.cur.execute(f'DELETE FROM Tasks WHERE id = {task_id}')
+        except Exception:
+            print('Database delete error')
+        else:
+            self.con.commit()
 
 
 if __name__ == '__main__':

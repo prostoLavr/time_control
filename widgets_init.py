@@ -50,7 +50,7 @@ class TaskWidget(task_widget.Ui_Frame, QFrame):
         self.endTime.setText('По сейчас' if data['end'] is None else 'По ' + data['end'].strftime('%d.%m %H:%M'))
 
     def set_run_by_btn(self):
-        self.my_parent.db.set_task_status(self.id_, Status.run.value)
+        self.my_parent.db.set_task_status(self.id_, Status.run.value, True)
         self.set_run()
         self.my_parent.db_update()
 
@@ -82,7 +82,7 @@ class TaskWidget(task_widget.Ui_Frame, QFrame):
             self.adaptateButton.show()
 
     def set_done_by_btn(self):
-        self.my_parent.db.set_task_status(self.id_, Status.done.value)
+        self.my_parent.db.set_task_status(self.id_, Status.done.value, False, True)
         self.set_done()
         self.end = dt.now()
         self.checkBox.setChecked(True)
