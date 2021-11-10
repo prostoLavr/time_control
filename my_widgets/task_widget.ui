@@ -124,7 +124,7 @@
       <item row="3" column="1">
        <widget class="QPushButton" name="adaptateButton">
         <property name="text">
-         <string>Начать</string>
+         <string>Начать сейчас</string>
         </property>
        </widget>
       </item>

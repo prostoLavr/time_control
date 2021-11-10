@@ -31,6 +31,8 @@ def main():
 
             builders.HomeAddTaskBuilder(window)
 
+            window.db_update()
+
             return window
 
     class MainWindow(QMainWindow, Ui_MainWindow):

@@ -68,7 +68,7 @@
       <item>
        <widget class="QPushButton" name="startTaskButton">
         <property name="text">
-         <string>Начать</string>
+         <string>Начать сейчас</string>
         </property>
        </widget>
       </item>

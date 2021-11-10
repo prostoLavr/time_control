@@ -85,6 +85,6 @@ class Ui_Frame(object):
         self.startTime.setText(_translate("Frame", "11.12 13:00"))
         self.checkBox.setText(_translate("Frame", "Выполнено"))
         self.EditButton.setText(_translate("Frame", "Удалить"))
-        self.adaptateButton.setText(_translate("Frame", "Начать"))
+        self.adaptateButton.setText(_translate("Frame", "Начать сейчас"))
         self.title.setText(_translate("Frame", "Задача №1"))
         self.endTime.setText(_translate("Frame", "11.12 14:00"))

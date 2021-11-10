@@ -231,6 +231,7 @@ class WidgetUpdateBuilder:
 
     def connect(self):
         def update():
+            print('update')
             self.connect_(self.window.home_widget_obj.nowScrollArea, self.window.db.now())
             self.connect_(self.window.home_widget_obj.futureScrollArea, self.window.db.future())
 

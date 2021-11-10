@@ -111,7 +111,7 @@ class Ui_Frame(object):
     def retranslateUi(self, Frame):
         _translate = QtCore.QCoreApplication.translate
         Frame.setWindowTitle(_translate("Frame", "Frame"))
-        self.startTaskButton.setText(_translate("Frame", "Начать"))
+        self.startTaskButton.setText(_translate("Frame", "Начать сейчас"))
         self.label_doing.setText(_translate("Frame", "Время выполнения"))
         self.label_start.setText(_translate("Frame", "Время начала:"))
         self.addTaskButton.setText(_translate("Frame", "Добавить"))

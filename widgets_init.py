@@ -47,7 +47,7 @@ class TaskWidget(task_widget.Ui_Frame, QFrame):
     def update_info(self, data: dict):
         self.set_text(data['name'])
         self.startTime.setText('C ' + data['start'].strftime('%d.%m %H:%M'))
-        self.endTime.setText('По сейчас' if data['end'] is None else 'По ' + data['end'].strftime('%d.%m %H:%M'))
+        self.endTime.setText('Идёт сейчас' if data['end'] is None else 'По ' + data['end'].strftime('%d.%m %H:%M'))
 
     def set_run_by_btn(self):
         self.my_parent.db.set_task_status(self.id_, Status.run.value, True)
