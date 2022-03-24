@@ -56,7 +56,7 @@ class GraphDiagramBuilder:
             else:
                 times[keys.index(i['name'].lower())] += i['end'] - i['start']
         lst = sorted(zip(keys, map(lambda x: x.seconds, times)), key=lambda x: x[1], reverse=True)
-        other_time = sum(times[count:])
+        other_time = sum(map(lambda x: x.seconds, times[count:]))
         res_names = [x[0] for x in lst[:count - 1]]
         res_names.append('Другое')
         res_times = [x[1] for x in lst[:count - 1]]
@@ -120,8 +120,8 @@ class GraphDiagramBuilder:
             window.scene.addItem(ellipse)
 
         window.view = QGraphicsView(window.scene, window.statistic_widget_obj.graphStatisticWidget)
-        window.view.setHorizontalScrollBarPolicy(False)
-        window.view.setVerticalScrollBarPolicy(False)
+        window.view.setHorizontalScrollBarPolicy(True)
+        window.view.setVerticalScrollBarPolicy(True)
         window.view.show()
 
 
@@ -231,7 +231,6 @@ class WidgetUpdateBuilder:
 
     def connect(self):
         def update():
-            print('update')
             self.connect_(self.window.home_widget_obj.nowScrollArea, self.window.db.now())
             self.connect_(self.window.home_widget_obj.futureScrollArea, self.window.db.future())
 
@@ -240,7 +239,7 @@ class WidgetUpdateBuilder:
     def connect_(self, scroll: QScrollArea, data: typing.Iterable):
         data = list(data)
         self.add_news(scroll, data)
-        self.set_differences(scroll, data)
+        # self.set_differences(scroll, data)
         self.remove_olds(scroll, data)
 
     @staticmethod
@@ -310,8 +309,8 @@ class HomeAddTaskBuilder:
     @staticmethod
     def time_set(self):
         time = dt.now()
-        minutes = (time.minute + 30) % 60
-        hours = (time.hour + (time.minute + 30) % 60) % 24
+        minutes = time.minute
+        hours = time.hour
         self.window.home_widget_obj.dateTimeStart.setDateTime(time.replace(hour=hours, minute=minutes))
         self.window.home_widget_obj.timeDoing.setTime(tm(0, 30))
 

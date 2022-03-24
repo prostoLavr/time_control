@@ -113,7 +113,7 @@ class Ui_Frame(object):
         Frame.setWindowTitle(_translate("Frame", "Frame"))
         self.startTaskButton.setText(_translate("Frame", "Начать сейчас"))
         self.label_doing.setText(_translate("Frame", "Время выполнения"))
-        self.label_start.setText(_translate("Frame", "Время начала:"))
+        self.label_start.setText(_translate("Frame", "Время начала"))
         self.addTaskButton.setText(_translate("Frame", "Добавить"))
         self.label.setText(_translate("Frame", "На выполнении"))
         self.label_2.setText(_translate("Frame", "Запланировано"))
